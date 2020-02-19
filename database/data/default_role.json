@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "name": "Super Admin"
+  },
+  {
+    "id": "2",
+    "name": "Partner Admin"
+  },
+  {
+    "id": "3",
+    "name": "Health care worker"
+  },
+  {
+    "id": "4",
+    "name": "Facility Admin"
+  }
+]

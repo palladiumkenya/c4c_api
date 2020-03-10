@@ -22,8 +22,8 @@ class CreateExposuresTable extends Migration
             $table->string('location');
             $table->text('description');
             $table->integer('previous_exposures');
-            $table->enum('patient_hiv_status',['POSITIVE','NEGATIVE']);
-            $table->enum('patient_hbv_status',['POSITIVE','NEGATIVE']);
+            $table->enum('patient_hiv_status',['POSITIVE','NEGATIVE','Not Specified']);
+            $table->enum('patient_hbv_status',['POSITIVE','NEGATIVE','Not Specified']);
             $table->boolean('pep_initiated');
             $table->string('device_purpose');
             $table->timestamps();

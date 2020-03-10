@@ -46,7 +46,32 @@ Route::group([
 ], function() {
     Route::get('auth/logout', 'AuthController@logout');
     Route::get('auth/user', 'AuthController@user');
+    Route::post('auth/complete_profile', 'ProfileController@complete_profile');
 
+
+    //check in
+    Route::post('check_in', 'ProfileController@check_in');
+    Route::get('check_in/history', 'ProfileController@check_in_history');
+
+
+    //immunizations
+    Route::get('immunizations', 'ImmunizationController@immunizations');
+    Route::post('immunizations/new', 'ImmunizationController@new_immunization');
+
+    //exposures
+    Route::get('exposures', 'ExposureController@exposures');
+    Route::post('exposures/new', 'ExposureController@new_exposure');
+
+    //feedback
+    Route::post('feedback', 'ResourcesController@post_feedback');
+
+
+    //resources
+    Route::get('diseases', 'ResourcesController@diseases');
+    Route::get('facilities', 'ResourcesController@facilities');
+    Route::get('facility_departments/{id}', 'ResourcesController@facility_departments');
+    Route::get('cadres', 'ResourcesController@cadres');
+    Route::get('devices', 'ResourcesController@devices');
 
 });
 

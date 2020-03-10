@@ -17,8 +17,8 @@ class CreateCheckInsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('approved_by');
-            $table->decimal('lat',4,4);
-            $table->decimal('lng',4,4);
+            $table->decimal('lat',8,4);
+            $table->decimal('lng',8,4);
             $table->boolean('approved')->default(0);
             $table->timestamps();
 

@@ -43,7 +43,7 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function render($request, Exception $exception)
     {
@@ -64,7 +64,8 @@ class Handler extends ExceptionHandler
             }else{
                 return response()->json([
                     'success' => false,
-                    'message' => $exception->getMessage(),
+                    'message' => "An error occurred",
+                    'errors' => $exception->getMessage(),
                 ]);
             }
         }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Exposure;
+use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use Illuminate\Http\Request;
@@ -18,6 +19,19 @@ class ExposureController extends Controller
     public function exposures()
     {
         return new GenericCollection(Exposure::where('user_id', \auth()->user()->id)->orderBy('id','desc')->paginate(10));
+
+    }
+
+    public function all_exposures()
+    {
+        return new GenericCollection(Exposure::orderBy('id','desc')->paginate(10));
+
+    }
+
+    public function facility_exposures($id)
+    {
+        $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
+        return new GenericCollection(Exposure::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(10));
 
     }
 

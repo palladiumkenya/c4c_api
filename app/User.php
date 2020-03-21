@@ -38,4 +38,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo('App\Role');
+    }
+
+    public function hcw()
+    {
+        return $this->hasOne('App\HealthCareWorker');
+    }
+
+
+
+
+    public function toArray() {
+        $data = parent::toArray();
+        $data['role'] = $this->role;
+        $data['hcw'] = $this->hcw;
+
+        return $data;
+    }
 }

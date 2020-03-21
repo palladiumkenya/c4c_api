@@ -60,6 +60,8 @@ Route::group([
 
     //exposures
     Route::get('exposures', 'ExposureController@exposures');
+    Route::get('exposures/all', 'ExposureController@all_exposures');
+    Route::get('exposures/facility/{_id}', 'ExposureController@facility_exposures');
     Route::post('exposures/new', 'ExposureController@new_exposure');
 
     //feedback
@@ -72,6 +74,12 @@ Route::group([
     Route::get('facility_departments/{id}', 'ResourcesController@facility_departments');
     Route::get('cadres', 'ResourcesController@cadres');
     Route::get('devices', 'ResourcesController@devices');
+
+    //users
+    Route::get('users', 'UserController@all_users');
+    Route::get('hcw', 'UserController@all_hcw');
+    Route::get('hcw/facility/{_id}', 'UserController@facility_hcw');
+
 
 });
 

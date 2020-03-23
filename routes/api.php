@@ -56,6 +56,8 @@ Route::group([
 
     //immunizations
     Route::get('immunizations', 'ImmunizationController@immunizations');
+    Route::get('immunizations/facility/{id}', 'ImmunizationController@facility_immunizations');
+    Route::get('immunizations/all', 'ImmunizationController@all_immunizations');
     Route::post('immunizations/new', 'ImmunizationController@new_immunization');
 
     //exposures
@@ -68,7 +70,7 @@ Route::group([
     Route::post('feedback', 'ResourcesController@post_feedback');
 
 
-    //resources
+    //collections
     Route::get('diseases', 'ResourcesController@diseases');
     Route::get('facilities', 'ResourcesController@facilities');
     Route::get('facility_departments/{id}', 'ResourcesController@facility_departments');
@@ -79,6 +81,22 @@ Route::group([
     Route::get('users', 'UserController@all_users');
     Route::get('hcw', 'UserController@all_hcw');
     Route::get('hcw/facility/{_id}', 'UserController@facility_hcw');
+
+    //devices
+    Route::get('devices/facility/{id}', 'DevicesController@facility_devices');
+    Route::get('devices/all', 'DevicesController@all_devices');
+    Route::post('devices/create', 'DevicesController@create_device');
+
+    //resources
+    Route::post('resources/cmes/create', 'ResourcesController@create_cme');
+    Route::get('resources/cmes', 'ResourcesController@get_cmes');
+    Route::post('resources/protocols/create', 'ResourcesController@create_protocol');
+    Route::get('resources/protocols/{id}', 'ResourcesController@get_facility_protocols');
+
+
+
+
+
 
 
 });

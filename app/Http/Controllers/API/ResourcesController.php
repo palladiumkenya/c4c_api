@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\Cadre;
+use App\Cme;
 use App\Device;
 use App\Disease;
 use App\Facility;
 use App\FacilityDepartment;
+use App\FacilityProtocol;
 use App\Feedback;
 use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
+use App\Immunization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -104,4 +107,84 @@ class ResourcesController extends Controller
 
         return new GenericCollection(Device::where('facility_id', $hcw->facility_id)->get());
     }
+
+    public function create_cme(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'image_file' => 'nullable|mimes:jpeg,jpg,png',
+        ],[
+//            'facility_id.required' => 'Please select your facility',
+//            'facility_department_id.required' => 'Please select your department',
+//            'cadre_id.required' => 'Please select your cadre'
+        ]);
+
+        $cme = new Cme();
+        $cme->title = $request->title;
+        $cme->body = $request->body;
+
+        if ($request->hasFile('image_file')){
+            $uploadedFile = $request->file('image_file');
+            $filename = time().$uploadedFile->getClientOriginalName();
+
+            $request->file('image_file')->storeAs("public/uploads", $filename);
+
+            $cme->file = "uploads/".$filename;
+        }
+
+        $cme->saveOrFail();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'CME added successfully'
+        ], 201);
+    }
+
+    public function create_protocol(Request $request)
+    {
+        $request->validate([
+            'facility_id' => 'required|numeric|exists:facilities,id',
+            'title' => 'required',
+            'body' => 'required',
+            'image_file' => 'nullable|mimes:jpeg,jpg,png',
+        ],[
+//            'facility_id.required' => 'Please select your facility',
+//            'facility_department_id.required' => 'Please select your department',
+//            'cadre_id.required' => 'Please select your cadre'
+        ]);
+
+        $protocol = new FacilityProtocol();
+        $protocol->facility_id = $request->facility_id;
+        $protocol->title = $request->title;
+        $protocol->body = $request->body;
+
+        if ($request->hasFile('image_file')){
+            $uploadedFile = $request->file('image_file');
+            $filename = time().$uploadedFile->getClientOriginalName();
+
+            $request->file('image_file')->storeAs("public/uploads", $filename);
+
+            $protocol->file = "uploads/".$filename;
+        }
+
+        $protocol->saveOrFail();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Protocol added successfully'
+        ], 201);
+    }
+
+    public function get_cmes()
+    {
+        return new GenericCollection(Cme::orderBy('id','desc')->paginate(10));
+    }
+
+    public function get_facility_protocols($id)
+    {
+        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$id)->paginate(10));
+    }
+
+
 }

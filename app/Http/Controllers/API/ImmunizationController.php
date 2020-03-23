@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use Illuminate\Http\Request;
@@ -19,7 +20,17 @@ class ImmunizationController extends Controller
     public function immunizations()
     {
         return new GenericCollection(Immunization::where('user_id', \auth()->user()->id)->paginate(10));
+    }
 
+    public function facility_immunizations($id)
+    {
+        $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
+        return new GenericCollection(Immunization::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(10));
+    }
+
+    public function all_immunizations()
+    {
+        return new GenericCollection(Immunization::orderBy('id','desc')->paginate(10));
     }
 
     public function new_immunization(Request $request)

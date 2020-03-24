@@ -92,6 +92,7 @@ Route::group([
     Route::get('resources/cmes', 'ResourcesController@get_cmes');
     Route::post('resources/protocols/create', 'ResourcesController@create_protocol');
     Route::get('resources/protocols/{id}', 'ResourcesController@get_facility_protocols');
+    Route::get('resources/hcw/protocols', 'ResourcesController@get_hcw_facility_protocols');
 
 
 

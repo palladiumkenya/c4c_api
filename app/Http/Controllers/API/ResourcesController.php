@@ -186,5 +186,20 @@ class ResourcesController extends Controller
         return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$id)->paginate(10));
     }
 
+    public function get_hcw_facility_protocols()
+    {
+        $user = auth()->user();
+
+        $hcw = HealthCareWorker::where('user_id', $user->id)->first();
+        if (is_null($hcw))
+            return response()->json([
+                'success' => false,
+                'message' => 'You do not belong to a facility. Please contact system admin'
+            ], 200);
+
+
+        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$hcw->facility_id)->paginate(10));
+    }
+
 
 }

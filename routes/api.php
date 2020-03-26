@@ -95,7 +95,20 @@ Route::group([
     Route::get('resources/hcw/protocols', 'ResourcesController@get_hcw_facility_protocols');
 
     //broadcasts
-    Route::post('broadcasts/cmes/create', 'BroadcastsController@create_cme');
+    Route::post('broadcasts/web/create', 'BroadcastsController@create_web_broadcast');
+    Route::get('broadcasts/web/history/{id}', 'BroadcastsController@get_facility_broadcast_history');
+    Route::get('broadcasts/web/all', 'BroadcastsController@get_all_broadcast_history');
+
+    Route::post('broadcasts/mobile/create', 'BroadcastsController@create_mobile_broadcast');
+    Route::get('broadcasts/mobile/pending', 'BroadcastsController@pending_mobile_broadcasts');
+    Route::get('broadcasts/mobile/approved', 'BroadcastsController@approved_mobile_broadcasts');
+    Route::post('broadcasts/mobile/approve', 'BroadcastsController@approve_mobile_broadcast');
+
+
+
+
+
+
     Route::get('broadcasts/cmes', 'BroadcastsController@get_cmes');
     Route::post('broadcasts/protocols/create', 'BroadcastsController@create_protocol');
     Route::get('broadcasts/protocols/{id}', 'BroadcastsController@get_facility_protocols');

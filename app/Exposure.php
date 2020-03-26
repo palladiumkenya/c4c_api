@@ -12,6 +12,11 @@ class Exposure extends Model
         return $this->belongsTo('App\Device');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function getDateAttribute($value)
     {
         $date = Carbon::parse($value);
@@ -22,6 +27,9 @@ class Exposure extends Model
     public function toArray() {
         $data = parent::toArray();
         $data['device'] = optional($this->device)->name;
+        $data['first_name'] = optional($this->user)->first_name;
+        $data['surname'] = optional($this->user)->surname;
+        $data['facility'] = optional(optional(optional($this->user)->hcw)->facility)->name;
 
         return $data;
     }

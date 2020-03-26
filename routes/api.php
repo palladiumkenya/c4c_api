@@ -94,6 +94,13 @@ Route::group([
     Route::get('resources/protocols/{id}', 'ResourcesController@get_facility_protocols');
     Route::get('resources/hcw/protocols', 'ResourcesController@get_hcw_facility_protocols');
 
+    //broadcasts
+    Route::post('broadcasts/cmes/create', 'BroadcastsController@create_cme');
+    Route::get('broadcasts/cmes', 'BroadcastsController@get_cmes');
+    Route::post('broadcasts/protocols/create', 'BroadcastsController@create_protocol');
+    Route::get('broadcasts/protocols/{id}', 'BroadcastsController@get_facility_protocols');
+    Route::get('broadcasts/hcw/protocols', 'BroadcastsController@get_hcw_facility_protocols');
+
 
 
 

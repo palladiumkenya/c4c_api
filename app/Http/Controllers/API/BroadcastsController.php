@@ -105,14 +105,15 @@ class BroadcastsController extends Controller
 
         foreach($request['cadres'] as $cadre_id) {
 
-            Log::info("cadre id".$cadre_id);
+            Log::info("cadre id: ".$cadre_id);
 
             $cadre = Cadre::find($cadre_id);
 
             if (is_null($cadre))
                 continue;
 
-            Log::info("cadre found", json_decode($cadre));
+            Log::info("cadre found");
+            Log::info(json_decode($cadre));
 
 
             $hcws = HealthCareWorker::where('facility_id',$hcw->facility_id)->where('cadre_id', $cadre_id)->get();

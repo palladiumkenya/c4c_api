@@ -100,7 +100,8 @@ class BroadcastsController extends Controller
             ], 200);
 
 
-        Log::info("hcw found", json_decode($hcw));
+        Log::info("hcw found ");
+        Log::info(json_encode($hcw));
 
         foreach($request['cadres'] as $cadre_id) {
 
@@ -119,7 +120,8 @@ class BroadcastsController extends Controller
             if ($hcws->count() == 0)
                 continue;
 
-            Log::info("hcws found ", json_decode($hcws));
+            Log::info("hcws found ");
+            Log::info(json_encode($hcws));
 
 
             $broadCast = new BroadCast();
@@ -130,7 +132,8 @@ class BroadcastsController extends Controller
             $broadCast->audience = $hcws->count();
             $broadCast->saveOrFail();
 
-            Log::info("broadcast: ", json_decode($broadCast));
+            Log::info("broadcast: ");
+            Log::info(json_decode($broadCast));
 
         }
         return response()->json([

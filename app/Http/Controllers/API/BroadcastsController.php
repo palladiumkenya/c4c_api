@@ -105,7 +105,7 @@ class BroadcastsController extends Controller
 
         foreach($request['cadres'] as $cadre_id) {
 
-            Log::info("cadre id", $cadre_id);
+            Log::info("cadre id".$cadre_id);
 
             $cadre = Cadre::find($cadre_id);
 

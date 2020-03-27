@@ -113,7 +113,7 @@ class BroadcastsController extends Controller
                 continue;
 
             Log::info("cadre found");
-            Log::info(json_decode($cadre));
+            Log::info(json_decode( json_encode($cadre), true));
 
 
             $hcws = HealthCareWorker::where('facility_id',$hcw->facility_id)->where('cadre_id', $cadre_id)->get();
@@ -122,7 +122,7 @@ class BroadcastsController extends Controller
                 continue;
 
             Log::info("hcws found ");
-            Log::info(json_encode($hcws));
+            Log::info(json_decode( json_encode($hcws), true));
 
 
             $broadCast = new BroadCast();
@@ -134,7 +134,7 @@ class BroadcastsController extends Controller
             $broadCast->saveOrFail();
 
             Log::info("broadcast: ");
-            Log::info(json_decode($broadCast));
+            Log::info(json_decode( json_encode($broadCast), true));
 
         }
         return response()->json([

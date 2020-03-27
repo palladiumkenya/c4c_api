@@ -89,7 +89,7 @@ class BroadcastsController extends Controller
             'cadres' => 'required',
             'message' => 'required',
         ],[
-            'facility_id.exists' => 'Invalid facility ID',
+            //'facility_id.exists' => 'Invalid facility ID',
         ]);
 
         $hcw = HealthCareWorker::where('user_id', auth()->user()->id)->first();
@@ -100,16 +100,26 @@ class BroadcastsController extends Controller
             ], 200);
 
 
+        Log::info("hcw found", $hcw);
+
         foreach($request['cadres'] as $cadre_id) {
+
+            Log::info("cadre id", $cadre_id);
+
             $cadre = Cadre::find($cadre_id);
 
             if (is_null($cadre))
                 continue;
 
+            Log::info("cadre found", $cadre);
+
+
             $hcws = HealthCareWorker::where('facility_id',$hcw->facility_id)->where('cadre_id', $cadre_id)->get();
 
             if ($hcws->count() == 0)
                 continue;
+
+            Log::info("hcws found ", $hcws);
 
 
             $broadCast = new BroadCast();
@@ -119,6 +129,8 @@ class BroadcastsController extends Controller
             $broadCast->message = $request->message;
             $broadCast->audience = $hcws->count();
             $broadCast->saveOrFail();
+
+            Log::info("broadcast: ", $broadCast);
 
         }
         return response()->json([

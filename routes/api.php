@@ -68,6 +68,7 @@ Route::group([
 
     //feedback
     Route::post('feedback', 'ResourcesController@post_feedback');
+    Route::get('feedback', 'ResourcesController@get_feedback');
 
 
     //collections

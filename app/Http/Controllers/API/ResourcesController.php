@@ -97,6 +97,12 @@ class ResourcesController extends Controller
 
     }
 
+    public function get_feedback()
+    {
+        return new GenericCollection(Feedback::orderBy('id', 'desc')->paginate(10));
+    }
+
+
     public function devices()
     {
         $user = auth()->user();

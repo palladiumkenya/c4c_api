@@ -10,7 +10,10 @@ class Cme extends Model
 {
     public function getFileAttribute($value)
     {
-        return Storage::disk('public')->url($value);
+        if ($value == null)
+            return null;
+        else
+            return Storage::disk('public')->url($value);
     }
 
     public function getCreatedAtAttribute($value)

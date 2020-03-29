@@ -29,7 +29,7 @@ class ImmunizationController extends Controller
             }
 
             if (sizeof($diseaseArray) > 0)
-                array_push($array,["disease"=>$disease->name, "immunizations"=>$diseaseArray]);
+                array_push($array,["disease_id"=>$disease->id,"disease"=>$disease->name, "immunizations"=>$diseaseArray]);
         }
 
         return response()->json([

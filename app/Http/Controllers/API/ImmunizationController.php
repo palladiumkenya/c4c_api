@@ -28,7 +28,8 @@ class ImmunizationController extends Controller
                 array_push($diseaseArray,$immunization->date);
             }
 
-            array_push($array,["disease"=>$disease->name, "immunizations"=>$diseaseArray]);
+            if (sizeof($diseaseArray) > 0)
+                array_push($array,["disease"=>$disease->name, "immunizations"=>$diseaseArray]);
         }
 
         return response()->json([

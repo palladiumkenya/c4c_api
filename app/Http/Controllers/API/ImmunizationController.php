@@ -66,6 +66,22 @@ class ImmunizationController extends Controller
         $immunization->date = $request->date;
         $immunization->saveOrFail();
 
+        if (!is_null($request->second_dose)){
+            $immunization = new Immunization();
+            $immunization->user_id = \auth()->user()->id;
+            $immunization->disease_id = $request->disease_id;
+            $immunization->date = $request->second_dose;
+            $immunization->saveOrFail();
+        }
+
+        if (!is_null($request->third_dose)){
+            $immunization = new Immunization();
+            $immunization->user_id = \auth()->user()->id;
+            $immunization->disease_id = $request->disease_id;
+            $immunization->date = $request->third_dose;
+            $immunization->saveOrFail();
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Immunization record added successfully'

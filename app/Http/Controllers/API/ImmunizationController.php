@@ -34,7 +34,7 @@ class ImmunizationController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $array
+            'data' => $array
         ], 200);
     }
 

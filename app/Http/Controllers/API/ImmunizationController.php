@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Disease;
 use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
@@ -19,8 +20,23 @@ class ImmunizationController extends Controller
 
     public function immunizations()
     {
-        return new GenericCollection(Immunization::where('user_id', \auth()->user()->id)->paginate(10));
+        $array = array();
+        foreach (Disease::all() as $disease) {
+            $diseaseArray = array();
+
+            foreach (Immunization::where('disease_id', $disease->id)->where('user_id', \auth()->user()->id)->get() as $immunization){
+                array_push($diseaseArray,$immunization->date);
+            }
+
+            array_push($array,["disease"=>$disease->name, "immunizations"=>$diseaseArray]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $array
+        ], 200);
     }
+
 
     public function facility_immunizations($id)
     {

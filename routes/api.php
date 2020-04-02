@@ -74,6 +74,7 @@ Route::group([
     //collections
     Route::get('diseases', 'ResourcesController@diseases');
     Route::get('facilities', 'ResourcesController@facilities');
+    Route::post('facilities/department/add', 'ResourcesController@add_facility_department');
     Route::get('facility_departments/{id}', 'ResourcesController@facility_departments');
     Route::get('cadres', 'ResourcesController@cadres');
     Route::get('devices', 'ResourcesController@devices');
@@ -105,15 +106,6 @@ Route::group([
     Route::get('broadcasts/mobile/approved', 'BroadcastsController@approved_mobile_broadcasts');
     Route::post('broadcasts/mobile/approve', 'BroadcastsController@approve_mobile_broadcast');
 
-
-
-
-
-
-    Route::get('broadcasts/cmes', 'BroadcastsController@get_cmes');
-    Route::post('broadcasts/protocols/create', 'BroadcastsController@create_protocol');
-    Route::get('broadcasts/protocols/{id}', 'BroadcastsController@get_facility_protocols');
-    Route::get('broadcasts/hcw/protocols', 'BroadcastsController@get_hcw_facility_protocols');
 
 
 

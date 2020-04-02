@@ -33,6 +33,29 @@ class ResourcesController extends Controller
         return new GenericCollection(Facility::all());
     }
 
+    public function add_facility_department(Request $request)
+    {
+        $request->validate([
+            'facility_id' => 'required|numeric|exists:facilities,id',
+            'department_name' => 'required',
+        ],[
+//            'facility_id.required' => 'Please select your facility',
+//            'facility_department_id.required' => 'Please select your department',
+//            'cadre_id.required' => 'Please select your cadre'
+        ]);
+
+        $fDepartment = new FacilityDepartment();
+        $fDepartment->facility_id = $request->facility_id;
+        $fDepartment->department_name = $request->department_name;
+
+        $fDepartment->saveOrFail();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Facility department added successfully'
+        ], 201);
+    }
+
     public function cadres()
     {
         return new GenericCollection(Cadre::all());

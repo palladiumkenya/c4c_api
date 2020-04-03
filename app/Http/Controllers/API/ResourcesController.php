@@ -4,17 +4,21 @@ namespace App\Http\Controllers\API;
 
 use App\Cadre;
 use App\Cme;
+use App\CmeFile;
 use App\Device;
 use App\Disease;
 use App\Facility;
 use App\FacilityDepartment;
 use App\FacilityProtocol;
+use App\FacilityProtocolFile;
 use App\Feedback;
 use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ResourcesController extends Controller
 {
@@ -149,20 +153,47 @@ class ResourcesController extends Controller
 //            'cadre_id.required' => 'Please select your cadre'
         ]);
 
-        $cme = new Cme();
-        $cme->title = $request->title;
-        $cme->body = $request->body;
 
-        if ($request->hasFile('image_file')){
-            $uploadedFile = $request->file('image_file');
-            $filename = time().$uploadedFile->getClientOriginalName();
+        DB::transaction(function () use ($request) {
+            $cme = new Cme();
+            $cme->title = $request->title;
+            $cme->body = $request->body;
 
-            $request->file('image_file')->storeAs("public/uploads", $filename);
+            if ($request->hasFile('image_file')){
+                $uploadedFile = $request->file('image_file');
+                $filename = time().$uploadedFile->getClientOriginalName();
 
-            $cme->file = "uploads/".$filename;
-        }
+                $request->file('image_file')->storeAs("public/uploads", $filename);
 
-        $cme->saveOrFail();
+                $cme->file = "uploads/".$filename;
+            }
+
+            $cme->saveOrFail();
+
+            Log::info("CME saved succesfully, uplosding files");
+
+            if ($request->hasFile('cme_files')) {
+                $files = $request->file('cme_files');
+
+                foreach ($files as $key=>$file) {
+                    $filenameUp = time().$file->getClientOriginalName();
+                    $request->file('cme_files')[$key]->storeAs("public/uploads", $filenameUp);
+
+                    Log::info("file uploaded");
+
+                    $cmeFile = new CmeFile();
+                    $cmeFile->cme_id = $cme->id;
+                    $cmeFile->file = "uploads/".$filenameUp;;
+                    $cmeFile->saveOrFail();
+
+                    Log::info("CME file saved");
+                }
+            }else{
+                Log::info("cme_files not found");
+
+            }
+
+        });
 
         return response()->json([
             'success' => true,
@@ -183,21 +214,52 @@ class ResourcesController extends Controller
 //            'cadre_id.required' => 'Please select your cadre'
         ]);
 
-        $protocol = new FacilityProtocol();
-        $protocol->facility_id = $request->facility_id;
-        $protocol->title = $request->title;
-        $protocol->body = $request->body;
 
-        if ($request->hasFile('image_file')){
-            $uploadedFile = $request->file('image_file');
-            $filename = time().$uploadedFile->getClientOriginalName();
+        DB::transaction(function () use ($request) {
 
-            $request->file('image_file')->storeAs("public/uploads", $filename);
+            $protocol = new FacilityProtocol();
+            $protocol->facility_id = $request->facility_id;
+            $protocol->title = $request->title;
+            $protocol->body = $request->body;
 
-            $protocol->file = "uploads/".$filename;
-        }
+            if ($request->hasFile('image_file')){
+                $uploadedFile = $request->file('image_file');
+                $filename = time().$uploadedFile->getClientOriginalName();
 
-        $protocol->saveOrFail();
+                $request->file('image_file')->storeAs("public/uploads", $filename);
+
+                $protocol->file = "uploads/".$filename;
+            }
+
+            $protocol->saveOrFail();
+
+            Log::info("protocol saved succesfully, uplosding files");
+
+            if ($request->hasFile('protocol_files')) {
+                $files = $request->file('protocol_files');
+
+                foreach ($files as $key=>$file) {
+                    $filenameUp = time().$file->getClientOriginalName();
+                    $request->file('protocol_files')[$key]->storeAs("public/uploads", $filenameUp);
+
+                    Log::info("file uploaded");
+
+                    $protocolFile = new FacilityProtocolFile();
+                    $protocolFile->facility_protocol_id = $protocol->id;
+                    $protocolFile->file = "uploads/".$filenameUp;;
+                    $protocolFile->saveOrFail();
+
+                    Log::info("protocol file saved");
+                }
+            }else{
+                Log::info("protocol_files not found");
+
+            }
+
+        });
+
+
+
 
         return response()->json([
             'success' => true,

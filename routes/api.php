@@ -88,6 +88,8 @@ Route::group([
     Route::get('users', 'UserController@all_users');
     Route::get('hcw', 'UserController@all_hcw');
     Route::get('hcw/facility/{_id}', 'UserController@facility_hcw');
+    Route::post('facility_admin/assign', 'UserController@assign_facility_admin');
+    Route::get('facility_admin/{id}', 'UserController@get_facility_admin');
 
     //devices
     Route::get('devices/facility/{id}', 'DevicesController@facility_devices');

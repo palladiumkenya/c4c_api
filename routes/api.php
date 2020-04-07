@@ -52,6 +52,9 @@ Route::group([
     //check in
     Route::post('check_in', 'ProfileController@check_in');
     Route::get('check_in/history', 'ProfileController@check_in_history');
+    Route::get('check_in/history/facility/{id}', 'ProfileController@check_in_history_by_facility');
+    Route::post('check_in/approve', 'ProfileController@approve_check_in');
+
 
 
     //immunizations

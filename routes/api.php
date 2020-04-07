@@ -106,6 +106,7 @@ Route::group([
 
     //broadcasts
     Route::post('broadcasts/web/create', 'BroadcastsController@create_web_broadcast');
+    Route::post('broadcasts/web/direct', 'BroadcastsController@create_web_direct_broadcast');
     Route::get('broadcasts/web/history/{id}', 'BroadcastsController@get_facility_broadcast_history');
     Route::get('broadcasts/web/all', 'BroadcastsController@get_all_broadcast_history');
 

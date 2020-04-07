@@ -7,7 +7,9 @@ use App\Cadre;
 use App\Cme;
 use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
+use App\Jobs\SendDirectSMS;
 use App\Jobs\SendSMS;
+use App\Outbox;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -56,6 +58,15 @@ class BroadcastsController extends Controller
                 //schedule message job queue
                 Log::info("getting mobile no...");
                 Log::info($hcw->user->msisdn);
+
+                Log::info("saving to outbox...");
+                $outbox = new Outbox();
+                $outbox->message = $request->message;
+                $outbox->recipient = $hcw->user->msisdn;
+                $outbox->saveOrFail();
+                Log::info("saved to outbox...");
+
+
                 Log::info("queueing sms...");
                 SendSMS::dispatch($hcw->user, $request->message);
                 Log::info("sms queued...");
@@ -65,6 +76,49 @@ class BroadcastsController extends Controller
 
 
         }
+        return response()->json([
+            'success' => true,
+            'message' => 'Messages have been queued successfully'
+        ], 200);
+
+
+    }
+
+
+    public function create_web_direct_broadcast(Request $request)
+    {
+        $request->validate([
+            'phone_numbers' => 'required',
+            'message' => 'required',
+        ],[
+//            'facility_id.exists' => 'Invalid facility ID',
+        ]);
+
+
+        $myArray = explode(',', $request->phone_numbers);
+
+
+        Log::info("looping through direct messages...");
+        foreach ($myArray as $msisdn){
+            //schedule message job queue
+            Log::info("getting mobile no...");
+            Log::info($msisdn);
+
+            Log::info("saving to outbox...");
+            $outbox = new Outbox();
+            $outbox->message = $request->message;
+            $outbox->recipient = $msisdn;
+            $outbox->saveOrFail();
+            Log::info("saved to outbox...");
+
+            Log::info("queueing sms...");
+
+            SendDirectSMS::dispatch($msisdn, $request->message);
+            Log::info("sms queued...");
+        }
+        Log::info("end of direct message loop...");
+
+
         return response()->json([
             'success' => true,
             'message' => 'Messages have been queued successfully'
@@ -223,6 +277,15 @@ class BroadcastsController extends Controller
             //schedule message job queue
             Log::info("getting mobile no...");
             Log::info($hcw->user->msisdn);
+
+            Log::info("saving to outbox...");
+            $outbox = new Outbox();
+            $outbox->message = $request->message;
+            $outbox->recipient = $hcw->user->msisdn;
+            $outbox->saveOrFail();
+            Log::info("saved to outbox...");
+
+
             Log::info("queueing sms...");
             SendSMS::dispatch($hcw->user, $broadcast->message);
             Log::info("sms queued...");

@@ -7,16 +7,18 @@ use Illuminate\Support\Facades\Storage;
 
 class FacilityProtocolFile extends Model
 {
-    public function getFileAttribute($value)
-    {
-        if ($value == null)
-            return null;
-        else
-            return Storage::disk('public')->url($value);
-    }
+//    public function getFileAttribute($value)
+//    {
+//        if ($value == null)
+//            return null;
+//        else
+//            return Storage::disk('public')->url($value);
+//    }
 
     public function toArray() {
-        return $this->file;
+        $data['link'] = Storage::disk('public')->url($this->file);
+        $data['file_name'] = ltrim($this->file,"uploads/");
+        return $data;
     }
 
 }

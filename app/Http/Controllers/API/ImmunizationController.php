@@ -17,7 +17,6 @@ class ImmunizationController extends Controller
         $this->middleware('auth:api');
     }
 
-
     public function immunizations()
     {
         $array = array();
@@ -38,16 +37,26 @@ class ImmunizationController extends Controller
         ], 200);
     }
 
-
     public function facility_immunizations($id)
     {
         $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
         return new GenericCollection(Immunization::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(10));
     }
 
+    public function facility_immunizations_by_disease($id, $disease_id)
+    {
+        $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
+        return new GenericCollection(Immunization::where('disease_id', $disease_id)->orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(10));
+    }
+
     public function all_immunizations()
     {
         return new GenericCollection(Immunization::orderBy('id','desc')->paginate(10));
+    }
+
+    public function all_immunizations_by_disease($id)
+    {
+        return new GenericCollection(Immunization::where('disease_id', $id)->orderBy('id','desc')->paginate(10));
     }
 
     public function new_immunization(Request $request)

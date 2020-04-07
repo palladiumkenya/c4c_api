@@ -14,6 +14,7 @@ use App\FacilityProtocolFile;
 use App\Feedback;
 use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
+use App\Http\Resources\GenericResource;
 use App\Immunization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -270,6 +271,12 @@ class ResourcesController extends Controller
     public function get_cmes()
     {
         return new GenericCollection(Cme::orderBy('id','desc')->paginate(10));
+    }
+
+
+    public function get_cme($id)
+    {
+        return new GenericResource(Cme::find($id));
     }
 
     public function get_facility_protocols($id)

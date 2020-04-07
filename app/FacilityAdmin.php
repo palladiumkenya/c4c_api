@@ -20,7 +20,10 @@ class FacilityAdmin extends Model
         $data = parent::toArray();
         $data['facility_name'] = optional($this->facility)->name;
         $data['mfl_code'] = optional($this->facility)->mfl_code;
-        $data['admin'] = $this->admin;
+        $data['first_name'] = optional($this->admin)->first_name;
+        $data['surname'] = optional($this->admin)->surname;
+        $data['msisdn'] = optional($this->admin)->msisdn;
+        $data['email'] = optional($this->admin)->email;
 
         return $data;
     }

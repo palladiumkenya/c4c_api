@@ -89,7 +89,6 @@ class ProfileController extends Controller
         ], 201);
     }
 
-
     public function check_in(Request $request)
     {
         $request->validate([
@@ -110,9 +109,44 @@ class ProfileController extends Controller
         ], 201);
     }
 
+    public function approve_check_in(Request $request)
+    {
+        $request->validate([
+            'check_in_id' => 'required',
+        ]);
+
+        $checkin = CheckIn::find($request->check_in_id);
+
+        if (is_null($checkin))
+            abort(404,"Check in not found");
+
+
+        if ($checkin->approved){
+            return response()->json([
+                'success' => false,
+                'message' => 'Checked in has already been approved'
+            ], 200);
+        }else{
+            $checkin->approved = true;
+            $checkin->approved_by = \auth()->user()->id;
+            $checkin->update();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Checked in has been approved'
+            ], 201);
+        }
+    }
+
     public function check_in_history()
     {
         return new GenericCollection(CheckIn::where('user_id', \auth()->user()->id)->orderBy('id','desc')->paginate(10));
+    }
+
+    public function check_in_history_by_facility($id)
+    {
+        $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
+        return new GenericCollection(CheckIn::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(10));
     }
 
 }

@@ -31,6 +31,8 @@ class Exposure extends Model
         $data['surname'] = optional($this->user)->surname;
         $data['facility'] = optional(optional(optional($this->user)->hcw)->facility)->name;
         $data['facility_id'] = optional(optional(optional($this->user)->hcw)->facility)->id;
+        $data['dob'] = optional(optional($this->user)->hcw)->dob;
+        $data['gender'] = optional($this->user)->gender;
         $data['cadre'] = optional(optional($this->user)->hcw)->cadre;
 
         return $data;

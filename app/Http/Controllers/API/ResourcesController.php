@@ -276,12 +276,25 @@ class ResourcesController extends Controller
 
     public function get_cme($id)
     {
-        return new GenericResource(Cme::find($id));
+        $cme = Cme::find($id);
+        if (is_null($cme))
+            abort(404, "CME does not exist");
+        return new GenericResource($cme);
     }
 
     public function get_facility_protocols($id)
     {
         return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$id)->paginate(10));
+    }
+
+    public function get_protocols_details($id)
+    {
+        $fp = FacilityProtocol::find($id);
+
+        if (is_null($fp))
+            abort(404, "Protocol does not exist");
+
+        return new GenericResource($fp);
     }
 
     public function get_hcw_facility_protocols()

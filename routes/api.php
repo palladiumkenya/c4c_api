@@ -47,6 +47,7 @@ Route::group([
     Route::get('auth/logout', 'AuthController@logout');
     Route::get('auth/user', 'AuthController@user');
     Route::post('auth/complete_profile', 'ProfileController@complete_profile');
+    Route::post('auth/update_profile', 'ProfileController@update_profile');
 
 
     //check in
@@ -102,6 +103,7 @@ Route::group([
     Route::get('resources/cmes/{id}', 'ResourcesController@get_cme');
     Route::post('resources/protocols/create', 'ResourcesController@create_protocol');
     Route::get('resources/protocols/{id}', 'ResourcesController@get_facility_protocols');
+    Route::get('resources/protocols/details/{id}', 'ResourcesController@get_protocols_details');
     Route::get('resources/hcw/protocols', 'ResourcesController@get_hcw_facility_protocols');
 
     //broadcasts

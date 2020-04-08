@@ -97,8 +97,8 @@ class ProfileController extends Controller
             'first_name' => 'required',
             'surname' => 'required',
             //'gender' => 'required',
-            'email' => 'nullable|unique:users,email,'.optional(\auth()->user()->hcw)->id,
-            'msisdn' => 'required|string|unique:users,msisdn,'.optional(\auth()->user()->hcw)->id,
+            'email' => 'nullable|unique:users,email,'.\auth()->user()->id,
+            'msisdn' => 'required|string|unique:users,msisdn,'.\auth()->user()->id,
             //'dob' => 'required',
         ],[
             'facility_id.required' => 'Please select your facility',

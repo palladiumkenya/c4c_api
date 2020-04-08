@@ -33,7 +33,6 @@ class ProfileController extends Controller
             'facility_department_id' => 'required|numeric|exists:facility_departments,id',
             'cadre_id' => 'required|numeric|exists:cadres,id',
             'dob' => 'required',
-            'id_no' => 'required',
         ],[
             'facility_id.required' => 'Please select your facility',
             'facility_department_id.required' => 'Please select your department',
@@ -87,6 +86,55 @@ class ProfileController extends Controller
             'success' => true,
             'message' => 'Profile completed successfully.'
         ], 201);
+    }
+
+    public function update_profile(Request $request)
+    {
+        $request->validate([
+            'facility_id' => 'required|numeric|exists:facilities,id',
+            'facility_department_id' => 'required|numeric|exists:facility_departments,id',
+            'cadre_id' => 'required|numeric|exists:cadres,id',
+            'first_name' => 'required',
+            'surname' => 'required',
+            //'gender' => 'required',
+            'email' => 'nullable|unique:users,email,'.optional(\auth()->user()->hcw)->id,
+            'msisdn' => 'required|string|unique:users,msisdn,'.optional(\auth()->user()->hcw)->id,
+            //'dob' => 'required',
+        ],[
+            'facility_id.required' => 'Please select your facility',
+            'facility_department_id.required' => 'Please select your department',
+            'cadre_id.required' => 'Please select your cadre',
+            'msisdn.required' => 'Please enter your phone number'
+        ]);
+
+
+        DB::transaction(function() use ($request) {
+
+            $user = \auth()->user();
+            $user->first_name = $request->first_name;
+            $user->surname = $request->surname;
+            //$user->gender = $request->gender;
+            $user->email = $request->email;
+            $user->msisdn = $request->msisdn;
+            $user->update();
+
+            $hcw = $user->hcw;
+
+            if (!is_null($hcw)){
+                $hcw->facility_id = $request->facility_id;
+                $hcw->facility_department_id = $request->facility_department_id;
+                $hcw->cadre_id = $request->cadre_id;
+                //$hcw->dob = $request->dob;
+                $hcw->id_no = $request->id_no;
+                $hcw->update();
+            }
+
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated successfully.'
+        ], 200);
     }
 
     public function check_in(Request $request)

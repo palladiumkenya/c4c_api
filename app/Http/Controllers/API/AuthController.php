@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         $request->validate([
-            'role_id' => 'required|numeric:exists:roles,id',
+            'role_id' => 'required|numeric|exists:roles,id',
             'first_name' => 'required|string',
             'surname' => 'required|string',
             'gender' => 'required|string',

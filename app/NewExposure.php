@@ -33,6 +33,9 @@ class NewExposure extends Model
         $data['dob'] = optional(optional($this->user)->hcw)->dob;
         $data['gender'] = optional($this->user)->gender;
         $data['cadre'] = optional(optional(optional($this->user)->hcw)->cadre)->name;
+        $data['county'] = optional(optional(optional($this->user)->hcw)->facility)->county;
+        $data['sub_county'] = optional(optional(optional($this->user)->hcw)->facility)->sub_county;
+
 
         return $data;
     }

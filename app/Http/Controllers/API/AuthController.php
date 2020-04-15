@@ -79,7 +79,7 @@ class AuthController extends Controller
         if(!Auth::attempt($credentials))
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid credentials, please check your email and password'
+                'message' => 'Invalid credentials, please check your phone number and password'
             ], 401);
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');

@@ -36,6 +36,7 @@ class HealthCareWorker extends Model
         $data['gender'] = optional($this->user)->gender;
         $data['msisdn'] = optional($this->user)->msisdn;
         $data['email'] = optional($this->user)->email;
+        $data['facility_name'] = optional($this->facility)->name;
         $data['facility'] = $this->facility;
         $data['department'] = optional($this->facility_department)->department_name;
         $data['cadre'] = $this->cadre;

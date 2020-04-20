@@ -46,7 +46,7 @@ class AuthController extends Controller
             $user->save();
             send_sms($request->msisdn, $request->message ? $request->message : "Welcome ".$request->first_name." to Caring For the Carer(C4C) SMS Platform. You have been successfully registered. Messages sent and received are not charged. MOH");
 
-            SendSMS::dispatch($user,"C4C provides health care workers with information on occupational PEP and other health preventive and promotive services.")->delay(now()->addMinutes(3));;
+            SendSMS::dispatch($user,"C4C provides health care workers with communication & resource center with information on COVID-19, Occupational PEP & other health promotion services.")->delay(now()->addMinutes(3));;
             //$user->sendEmailVerificationNotification();
 
 

@@ -84,6 +84,8 @@ Route::group([
     Route::get('facility_departments/{id}', 'ResourcesController@facility_departments');
     Route::get('cadres', 'ResourcesController@cadres');
     Route::get('devices', 'ResourcesController@devices');
+    Route::get('counties', 'ResourcesController@counties');
+    Route::get('subcounties/{id}', 'ResourcesController@subcounties');
 
     //users
     Route::get('users', 'UserController@all_users');

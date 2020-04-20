@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Cadre;
 use App\Cme;
 use App\CmeFile;
+use App\County;
 use App\Device;
 use App\Disease;
 use App\Facility;
@@ -16,6 +17,7 @@ use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
 use App\Http\Resources\GenericResource;
 use App\Immunization;
+use App\SubCounty;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -129,7 +131,6 @@ class ResourcesController extends Controller
     {
         return new GenericCollection(Feedback::orderBy('id', 'desc')->paginate(10));
     }
-
 
     public function devices()
     {
@@ -270,9 +271,8 @@ class ResourcesController extends Controller
 
     public function get_cmes()
     {
-        return new GenericCollection(Cme::orderBy('id','desc')->paginate(10));
+        return new GenericCollection(Cme::orderBy('id','desc')->paginate(20));
     }
-
 
     public function get_cme($id)
     {
@@ -284,7 +284,7 @@ class ResourcesController extends Controller
 
     public function get_facility_protocols($id)
     {
-        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$id)->paginate(10));
+        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$id)->paginate(20));
     }
 
     public function get_protocols_details($id)
@@ -309,8 +309,20 @@ class ResourcesController extends Controller
             ], 200);
 
 
-        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$hcw->facility_id)->paginate(10));
+        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$hcw->facility_id)->paginate(20));
     }
+
+
+    public function counties()
+    {
+        return new GenericCollection(County::all());
+    }
+
+    public function subcounties($id)
+    {
+        return new GenericCollection(SubCounty::where('county_id', $id)->get());
+    }
+
 
 
 }

@@ -31,17 +31,17 @@ class UserController extends Controller
 
     public function all_users(Request $request)
     {
-        return new GenericCollection(User::orderBy('id','desc')->paginate(10));
+        return new GenericCollection(User::orderBy('id','desc')->paginate(100));
     }
 
     public function all_hcw()
     {
-        return new GenericCollection(HealthCareWorker::orderBy('id','desc')->paginate(10));
+        return new GenericCollection(HealthCareWorker::orderBy('id','desc')->paginate(100));
     }
 
     public function facility_hcw($id)
     {
-        return new GenericCollection(HealthCareWorker::where('facility_id',$id)->paginate(10));
+        return new GenericCollection(HealthCareWorker::where('facility_id',$id)->paginate(100));
     }
 
     public function assign_facility_admin(Request $request)

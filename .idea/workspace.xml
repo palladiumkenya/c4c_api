@@ -3,20 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="05459a97-3ee2-41dc-a725-74b573b4880e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exposure.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Facility.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Facility.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/HealthCareWorker.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/HealthCareWorker.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/send_sms.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/send_sms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/ImmunizationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/ImmunizationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/ResourcesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/ResourcesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Immunization.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Immunization.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/NewExposure.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/NewExposure.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_02_17_111621_create_facilities_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/FacilityDepartmentSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/FacilityDepartmentSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +192,7 @@
       <workItem from="1587145735145" duration="599000" />
       <workItem from="1587147224064" duration="729000" />
       <workItem from="1587210980603" duration="148000" />
-      <workItem from="1587370655216" duration="6620000" />
+      <workItem from="1587370655216" duration="7677000" />
     </task>
     <servers />
   </component>

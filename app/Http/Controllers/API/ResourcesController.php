@@ -70,12 +70,12 @@ class ResourcesController extends Controller
 
     public function facility_departments($_id)
     {
-        $facility = Facility::find($_id);
+//        $facility = Facility::find($_id);
+//
+//        if (is_null($facility))
+//            abort(404, "Facility does not exist");
 
-        if (is_null($facility))
-            abort(404, "Facility does not exist");
-
-        return new GenericCollection($facility->departments);
+        return new GenericCollection(FacilityDepartment::all());
     }
 
     public function post_feedback(Request $request)

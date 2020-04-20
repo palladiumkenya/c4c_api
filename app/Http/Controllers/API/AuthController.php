@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Jobs\SendSMS;
 use App\Otp;
 use App\User;
 use Carbon\Carbon;
@@ -43,7 +44,9 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
             ]);
             $user->save();
+            send_sms($request->msisdn, $request->message ? $request->message : "Welcome ".$request->first_name." to Caring For the Carer(C4C) SMS Platform. You have been successfully registered. Messages sent and received are not charged. MOH");
 
+            SendSMS::dispatch($user,"C4C provides health care workers with information on occupational PEP and other health preventive and promotive services.")->delay(now()->addMinutes(3));;
             //$user->sendEmailVerificationNotification();
 
 

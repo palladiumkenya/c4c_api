@@ -32,6 +32,8 @@ class Immunization extends Model
         $data['surname'] = optional($this->user)->surname;
         $data['gender'] = optional($this->user)->gender;
         $data['msisdn'] = optional($this->user)->msisdn;
+        $data['facility_level'] = optional(optional(optional($this->user)->hcw)->facility)->keph_level;
+
 
         return $data;
     }

@@ -8,6 +8,7 @@ use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class ImmunizationController extends Controller
 {
@@ -40,6 +41,9 @@ class ImmunizationController extends Controller
     public function facility_immunizations($id)
     {
         $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
+
+        Log::info("hcws ", json_decode($hcws));
+
         return new GenericCollection(Immunization::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(10));
     }
 

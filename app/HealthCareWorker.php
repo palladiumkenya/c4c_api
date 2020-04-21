@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class HealthCareWorker extends Model
@@ -25,6 +26,12 @@ class HealthCareWorker extends Model
     public function cadre()
     {
         return $this->belongsTo('App\Cadre');
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        $date = Carbon::parse($value);
+        return $date->isoFormat('YYYY-MM-D HH:mm:ss ');
     }
 
 

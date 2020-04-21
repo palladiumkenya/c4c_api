@@ -45,7 +45,6 @@ class ExposureController extends Controller
             'patient_hiv_status' => 'required|in:POSITIVE,NEGATIVE,UNKNOWN',
             'patient_hbv_status' => 'required|in:POSITIVE,NEGATIVE,UNKNOWN',
             'previous_exposures' => 'required',
-            'previous_pep_initiated' => 'required',
         ],[
 //            'device_id.required' => 'Please select the device in use during exposure'
         ]);

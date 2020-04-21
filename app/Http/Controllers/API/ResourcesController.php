@@ -17,6 +17,8 @@ use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
 use App\Http\Resources\GenericResource;
 use App\Immunization;
+use App\SpecialResource;
+use App\SpecialResourceFile;
 use App\SubCounty;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -321,6 +323,73 @@ class ResourcesController extends Controller
     public function subcounties($id)
     {
         return new GenericCollection(SubCounty::where('county_id', $id)->get());
+    }
+
+
+
+    public function create_special_resource(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'image_file' => 'nullable|mimes:jpeg,jpg,png',
+        ],[
+//            'facility_id.required' => 'Please select your facility',
+//            'facility_department_id.required' => 'Please select your department',
+//            'cadre_id.required' => 'Please select your cadre'
+        ]);
+
+
+        DB::transaction(function () use ($request) {
+            $specialResource = new SpecialResource();
+            $specialResource->title = $request->title;
+            $specialResource->body = $request->body;
+
+            if ($request->hasFile('image_file')){
+                $uploadedFile = $request->file('image_file');
+                $filename = time().$uploadedFile->getClientOriginalName();
+
+                $request->file('image_file')->storeAs("public/uploads", $filename);
+
+                $specialResource->file = "uploads/".$filename;
+            }
+
+            $specialResource->saveOrFail();
+
+            Log::info("specialResource saved succesfully, uplosding files");
+
+            if ($request->hasFile('resource_files')) {
+                $files = $request->file('resource_files');
+
+                foreach ($files as $key=>$file) {
+                    $filenameUp = time().$file->getClientOriginalName();
+                    $request->file('resource_files')[$key]->storeAs("public/uploads", $filenameUp);
+
+                    Log::info("file uploaded");
+
+                    $specialFile = new SpecialResourceFile();
+                    $specialFile->special_resource_id = $specialResource->id;
+                    $specialFile->file = "uploads/".$filenameUp;;
+                    $specialFile->saveOrFail();
+
+                    Log::info(" special resource file saved");
+                }
+            }else{
+                Log::info("resource_files not found");
+
+            }
+
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Special resource added successfully'
+        ], 201);
+    }
+
+    public function get_special_resource()
+    {
+        return new GenericCollection(SpecialResource::orderBy('id','desc')->paginate(20));
     }
 
 

@@ -128,7 +128,8 @@ class AuthController extends Controller
         if (is_null($user)){
             return response()->json([
                 'success' => false,
-                'message' => 'Phone number is not registered'
+                'message' => 'Phone number is not registered',
+                'errors' => 'Please sign up first to reset your password'
             ], 200);
         }else{
             $code = $this->generateOtp();
@@ -145,7 +146,7 @@ class AuthController extends Controller
 
             $message = "Use this OTP to reset your password: ".$code;
             Log::info("Generate OTP for ".$request->msisdn.": ".$code);
-            //send_sms($request->msisdn, $message);
+            send_sms($request->msisdn, $message);
 
             return response()->json([
                 'success' => true,
@@ -193,6 +194,7 @@ class AuthController extends Controller
     public function reset_password(Request $request)
     {
         $request->validate([
+            'otp' => 'required',
             'msisdn' => 'required',
             'password' => 'required'
         ]);
@@ -205,15 +207,36 @@ class AuthController extends Controller
                 'message' => 'Invalid user'
             ], 200);
         }else{
-            $user->password = bcrypt($request->password);
-            $user->update();
 
-           // send_sms($request->msisdn, "Your password was reset successfully");
+            $otp = OTP::where('msisdn',$request->msisdn)->where('verification_code',$request->otp)->orderBy('id','desc')->first();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Your password was reset successfully'
-            ], 200);
+            if (is_null($otp)){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid OTP'
+                ], 200);
+            }else{
+                if ($otp->verified == 'yes'){
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'OTP has already expired'
+                    ], 200);
+                }else{
+                    $otp->verified = 'yes';
+                    $otp->verification_date = Carbon::now();
+                    $otp->update();
+
+                    $user->password = bcrypt($request->password);
+                    $user->update();
+
+                     send_sms($request->msisdn, "Your password was reset successfully");
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Your password was reset successfully. Please log in to continue'
+                    ], 200);
+                }
+            }
         }
 
     }

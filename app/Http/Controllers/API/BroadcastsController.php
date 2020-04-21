@@ -59,12 +59,7 @@ class BroadcastsController extends Controller
                 Log::info("getting mobile no...");
                 Log::info($hcw->user->msisdn);
 
-                Log::info("saving to outbox...");
-                $outbox = new Outbox();
-                $outbox->message = $request->message;
-                $outbox->recipient = $hcw->user->msisdn;
-                $outbox->saveOrFail();
-                Log::info("saved to outbox...");
+
 
 
                 Log::info("queueing sms...");
@@ -104,12 +99,6 @@ class BroadcastsController extends Controller
             Log::info("getting mobile no...");
             Log::info($msisdn);
 
-            Log::info("saving to outbox...");
-            $outbox = new Outbox();
-            $outbox->message = $request->message;
-            $outbox->recipient = $msisdn;
-            $outbox->saveOrFail();
-            Log::info("saved to outbox...");
 
             Log::info("queueing sms...");
 
@@ -277,13 +266,6 @@ class BroadcastsController extends Controller
             //schedule message job queue
             Log::info("getting mobile no...");
             Log::info($hcw->user->msisdn);
-
-            Log::info("saving to outbox...");
-            $outbox = new Outbox();
-            $outbox->message = $request->message;
-            $outbox->recipient = $hcw->user->msisdn;
-            $outbox->saveOrFail();
-            Log::info("saved to outbox...");
 
 
             Log::info("queueing sms...");

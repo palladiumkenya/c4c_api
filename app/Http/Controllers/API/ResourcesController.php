@@ -210,6 +210,71 @@ class ResourcesController extends Controller
         ], 201);
     }
 
+    public function update_cme(Request $request)
+    {
+        $request->validate([
+            'cme_id' => 'required',
+            'title' => 'required',
+            'body' => 'required',
+            'image_file' => 'nullable|mimes:jpeg,jpg,png',
+        ],[
+//            'facility_id.required' => 'Please select your facility',
+//            'facility_department_id.required' => 'Please select your department',
+//            'cadre_id.required' => 'Please select your cadre'
+        ]);
+
+
+        $cme = Cme::find($request->cme_id);
+
+        if (is_null($cme))
+            abort(404,"CME not found");
+
+        DB::transaction(function () use ($request, $cme) {
+            $cme->title = $request->title;
+            $cme->body = $request->body;
+
+            if ($request->hasFile('image_file')){
+                $uploadedFile = $request->file('image_file');
+                $filename = time().$uploadedFile->getClientOriginalName();
+
+                $request->file('image_file')->storeAs("public/uploads", $filename);
+
+                $cme->file = "uploads/".$filename;
+            }
+
+            $cme->update();
+
+            Log::info("CME updated succesfully, uploading files");
+
+            if ($request->hasFile('cme_files')) {
+                $files = $request->file('cme_files');
+
+                foreach ($files as $key=>$file) {
+                    $filenameUp = time().$file->getClientOriginalName();
+                    $request->file('cme_files')[$key]->storeAs("public/uploads", $filenameUp);
+
+                    Log::info("file uploaded");
+
+                    $cmeFile = new CmeFile();
+                    $cmeFile->cme_id = $cme->id;
+                    $cmeFile->file = "uploads/".$filenameUp;;
+                    $cmeFile->saveOrFail();
+
+                    Log::info("CME file saved");
+                }
+            }else{
+                Log::info("cme_files not found");
+
+            }
+
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'CME updated successfully'
+        ], 201);
+    }
+
     public function get_cmes()
     {
         return new GenericCollection(Cme::orderBy('id','desc')->paginate(20));
@@ -302,6 +367,75 @@ class ResourcesController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Protocol added successfully'
+        ], 201);
+    }
+
+    public function update_protocol(Request $request)
+    {
+        $request->validate([
+            'protocol_id' => 'required',
+            'facility_id' => 'required|numeric|exists:facilities,id',
+            'title' => 'required',
+            'body' => 'required',
+            'image_file' => 'nullable|mimes:jpeg,jpg,png',
+        ],[
+//            'facility_id.required' => 'Please select your facility',
+//            'facility_department_id.required' => 'Please select your department',
+//            'cadre_id.required' => 'Please select your cadre'
+        ]);
+
+        $protocol = FacilityProtocol::find($request->protocol_id);
+        if (is_null($protocol))
+            abort(404, "Protocol not found");
+
+        DB::transaction(function () use ($request,$protocol) {
+
+            $protocol->facility_id = $request->facility_id;
+            $protocol->title = $request->title;
+            $protocol->body = $request->body;
+
+            if ($request->hasFile('image_file')){
+                $uploadedFile = $request->file('image_file');
+                $filename = time().$uploadedFile->getClientOriginalName();
+
+                $request->file('image_file')->storeAs("public/uploads", $filename);
+
+                $protocol->file = "uploads/".$filename;
+            }
+
+            $protocol->update();
+
+            Log::info("protocol updated succesfully, uplosding files");
+
+            if ($request->hasFile('protocol_files')) {
+                $files = $request->file('protocol_files');
+
+                foreach ($files as $key=>$file) {
+                    $filenameUp = time().$file->getClientOriginalName();
+                    $request->file('protocol_files')[$key]->storeAs("public/uploads", $filenameUp);
+
+                    Log::info("file uploaded");
+
+                    $protocolFile = new FacilityProtocolFile();
+                    $protocolFile->facility_protocol_id = $protocol->id;
+                    $protocolFile->file = "uploads/".$filenameUp;;
+                    $protocolFile->saveOrFail();
+
+                    Log::info("protocol file saved");
+                }
+            }else{
+                Log::info("protocol_files not found");
+
+            }
+
+        });
+
+
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Protocol updated successfully'
         ], 201);
     }
 
@@ -423,6 +557,71 @@ class ResourcesController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Special resource added successfully'
+        ], 201);
+    }
+
+    public function update_special_resource(Request $request)
+    {
+        $request->validate([
+            'special_resource_id' => 'required',
+            'title' => 'required',
+            'body' => 'required',
+            'image_file' => 'nullable|mimes:jpeg,jpg,png',
+        ],[
+//            'facility_id.required' => 'Please select your facility',
+//            'facility_department_id.required' => 'Please select your department',
+//            'cadre_id.required' => 'Please select your cadre'
+        ]);
+
+
+        $specialResource = SpecialResource::find($request->special_resource_id);
+        if (is_null($specialResource))
+            abort(404, "Special resource not found");
+
+        DB::transaction(function () use ($request,$specialResource) {
+
+            $specialResource->title = $request->title;
+            $specialResource->body = $request->body;
+
+            if ($request->hasFile('image_file')){
+                $uploadedFile = $request->file('image_file');
+                $filename = time().$uploadedFile->getClientOriginalName();
+
+                $request->file('image_file')->storeAs("public/uploads", $filename);
+
+                $specialResource->file = "uploads/".$filename;
+            }
+
+            $specialResource->update();
+
+            Log::info("specialResource updated succesfully, uplosding files");
+
+            if ($request->hasFile('resource_files')) {
+                $files = $request->file('resource_files');
+
+                foreach ($files as $key=>$file) {
+                    $filenameUp = time().$file->getClientOriginalName();
+                    $request->file('resource_files')[$key]->storeAs("public/uploads", $filenameUp);
+
+                    Log::info("file uploaded");
+
+                    $specialFile = new SpecialResourceFile();
+                    $specialFile->special_resource_id = $specialResource->id;
+                    $specialFile->file = "uploads/".$filenameUp;;
+                    $specialFile->saveOrFail();
+
+                    Log::info(" special resource file saved");
+                }
+            }else{
+                Log::info("resource_files not found");
+
+            }
+
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Special resource updated successfully'
         ], 201);
     }
 

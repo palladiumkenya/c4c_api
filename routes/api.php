@@ -108,7 +108,9 @@ Route::group([
     Route::get('resources/protocols/details/{id}', 'ResourcesController@get_protocols_details');
     Route::get('resources/hcw/protocols', 'ResourcesController@get_hcw_facility_protocols');
     Route::post('resources/special/create', 'ResourcesController@create_special_resource');
-    Route::get('resources/special', 'ResourcesController@get_special_resource');
+    Route::get('resources/special', 'ResourcesController@get_special_resources');
+    Route::get('resources/special/{id}', 'ResourcesController@get_special_resource');
+
 
     //broadcasts
     Route::post('broadcasts/web/create', 'BroadcastsController@create_web_broadcast');

@@ -387,10 +387,19 @@ class ResourcesController extends Controller
         ], 201);
     }
 
-    public function get_special_resource()
+    public function get_special_resources()
     {
         return new GenericCollection(SpecialResource::orderBy('id','desc')->paginate(20));
     }
+
+    public function get_special_resource($id)
+    {
+        $specialResource = SpecialResource::find($id);
+        if (is_null($specialResource))
+            abort(404, "Special resource does not exist");
+        return new GenericResource($specialResource);
+    }
+
 
 
 

@@ -101,11 +101,13 @@ Route::group([
 
     //resources
     Route::post('resources/cmes/create', 'ResourcesController@create_cme');
+    Route::post('resources/cmes/update', 'ResourcesController@update_cme');
     Route::get('resources/cmes', 'ResourcesController@get_cmes');
     Route::get('resources/cmes/{id}', 'ResourcesController@get_cme');
     Route::delete('resources/cmes/delete/{id}', 'ResourcesController@delete_cme');
 
     Route::post('resources/protocols/create', 'ResourcesController@create_protocol');
+    Route::post('resources/protocols/update', 'ResourcesController@update_protocol');
     Route::get('resources/protocols/{id}', 'ResourcesController@get_facility_protocols');
     Route::get('resources/protocols/details/{id}', 'ResourcesController@get_protocols_details');
     Route::delete('resources/protocols/delete/{id}', 'ResourcesController@delete_facility_protocol');
@@ -113,6 +115,7 @@ Route::group([
     Route::get('resources/hcw/protocols', 'ResourcesController@get_hcw_facility_protocols');
 
     Route::post('resources/special/create', 'ResourcesController@create_special_resource');
+    Route::post('resources/special/update', 'ResourcesController@update_special_resource');
     Route::get('resources/special', 'ResourcesController@get_special_resources');
     Route::get('resources/special/{id}', 'ResourcesController@get_special_resource');
     Route::delete('resources/special/delete/{id}', 'ResourcesController@delete_special_resource');

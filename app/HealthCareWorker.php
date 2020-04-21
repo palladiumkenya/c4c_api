@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class HealthCareWorker extends Model
 {
+
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -46,6 +47,7 @@ class HealthCareWorker extends Model
         $data['cadre_id'] = $this->cadre_id;
         $data['dob'] = $this->dob;
         $data['id_no'] = $this->id_no;
+        $data['created_at'] = $this->created_at;
 
 
         return $data;

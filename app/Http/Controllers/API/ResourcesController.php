@@ -134,6 +134,9 @@ class ResourcesController extends Controller
         return new GenericCollection(Feedback::orderBy('id', 'desc')->paginate(10));
     }
 
+
+
+
     public function devices()
     {
         $user = auth()->user();
@@ -144,6 +147,8 @@ class ResourcesController extends Controller
 
         return new GenericCollection(Device::where('facility_id', $hcw->facility_id)->get());
     }
+
+
 
     public function create_cme(Request $request)
     {
@@ -204,6 +209,35 @@ class ResourcesController extends Controller
             'message' => 'CME added successfully'
         ], 201);
     }
+
+    public function get_cmes()
+    {
+        return new GenericCollection(Cme::orderBy('id','desc')->paginate(20));
+    }
+
+    public function get_cme($id)
+    {
+        $cme = Cme::find($id);
+        if (is_null($cme))
+            abort(404, "CME does not exist");
+        return new GenericResource($cme);
+    }
+
+    public function delete_cme($id){
+        $cme = Cme::find($id);
+        if (is_null($cme))
+            abort(404, "CME does not exist");
+
+        $cme->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'CME has been deleted successfully'
+        ], 200);
+    }
+
+
+
 
     public function create_protocol(Request $request)
     {
@@ -271,19 +305,6 @@ class ResourcesController extends Controller
         ], 201);
     }
 
-    public function get_cmes()
-    {
-        return new GenericCollection(Cme::orderBy('id','desc')->paginate(20));
-    }
-
-    public function get_cme($id)
-    {
-        $cme = Cme::find($id);
-        if (is_null($cme))
-            abort(404, "CME does not exist");
-        return new GenericResource($cme);
-    }
-
     public function get_facility_protocols($id)
     {
         return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$id)->paginate(20));
@@ -299,6 +320,23 @@ class ResourcesController extends Controller
         return new GenericResource($fp);
     }
 
+    public function delete_facility_protocol($id){
+        $fp = FacilityProtocol::find($id);
+
+        if (is_null($fp))
+            abort(404, "Protocol does not exist");
+
+        $fp->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Protocol has been deleted successfully'
+        ], 200);
+    }
+
+
+
+
     public function get_hcw_facility_protocols()
     {
         $user = auth()->user();
@@ -313,6 +351,7 @@ class ResourcesController extends Controller
 
         return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$hcw->facility_id)->paginate(20));
     }
+
 
 
     public function counties()
@@ -399,6 +438,21 @@ class ResourcesController extends Controller
             abort(404, "Special resource does not exist");
         return new GenericResource($specialResource);
     }
+
+    public function delete_special_resource($id)
+    {
+        $specialResource = SpecialResource::find($id);
+        if (is_null($specialResource))
+            abort(404, "Special resource does not exist");
+
+        $specialResource->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Special resource has been deleted successfully'
+        ], 200);
+    }
+
 
 
 

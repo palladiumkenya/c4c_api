@@ -55,6 +55,8 @@ class HealthCareWorker extends Model
         $data['dob'] = $this->dob;
         $data['id_no'] = $this->id_no;
         $data['created_at'] = $this->created_at;
+        $data['county'] = optional(optional($this->facility)->county)->name;
+        $data['sub_county'] = optional(optional($this->facility)->sub_county)->name;
 
 
         return $data;

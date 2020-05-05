@@ -6,6 +6,7 @@ use App\Exposure;
 use App\HealthCareWorker;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
+use App\Jobs\SendSMS;
 use App\NewExposure;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -66,6 +67,10 @@ class ExposureController extends Controller
         $exposure->previous_exposures = $request->previous_exposures;
         $exposure->previous_pep_initiated = $request->previous_pep_initiated;
         $exposure->saveOrFail();
+
+        send_sms(auth()->user()->msisdn,  "Hello ".auth()->user()->first_name.", the exposure is regrettable. Kindly prevent infection by visiting your PEP care provider immediately. After 72 hours’ prevention is not effective.");
+
+        SendSMS::dispatch(auth()->user(),"Hello ".auth()->user()->first_name.", it is 24 hours since you were exposed. Have you visited your PEP care provider? YES/NO. MOH")->delay(now()->addHours(24));
 
         return response()->json([
             'success' => true,

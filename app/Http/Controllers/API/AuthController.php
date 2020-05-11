@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Cadre;
+use App\Facility;
+use App\FacilityDepartment;
+use App\HealthCareWorker;
 use App\Jobs\SendSMS;
 use App\Otp;
 use App\User;
@@ -57,6 +61,73 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Registration successful. Please login to continue'
+        ], 201);
+    }
+
+    public function upload_bulk_users(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string',
+            'surname' => 'required|string',
+            'gender' => 'required|string',
+            'msisdn' => 'required|string|unique:users',
+            'email' => 'nullable|string|email|unique:users',
+
+
+
+            'facility_id' => 'required|numeric|exists:facilities,id',
+            'facility_department' => 'required|exists:facility_departments,department_name',
+            'cadre' => 'required|exists:cadres,name',
+            'dob' => 'required',
+        ],[
+            'email.unique' => 'The email is already registered',
+            'msisdn.required' => 'Phone number is required',
+            'msisdn.unique' => 'The phone number has already been taken. ',
+
+
+            'facility_id.required' => 'Please select a facility',
+            'facility_department_id.required' => 'Please enter a department',
+            'cadre_id.required' => 'Please enter a cadre'
+        ]);
+
+
+        DB::transaction(function() use ($request) {
+            $user = new User([
+                'role_id' => 3, //hcw
+                'first_name' => $request->first_name,
+                'surname' => $request->surname,
+                'gender' => $request->gender,
+                'email' => $request->email,
+                'msisdn' => $request->msisdn,
+                'password' => bcrypt($request->msisdn),
+            ]);
+            $user->save();
+            send_sms($request->msisdn, $request->message ? $request->message : "Welcome ".$request->first_name." to Care For the Carer (C4C) SMS Platform. You have been successfully registered. Messages sent and received are not charged. MOH");
+
+            SendSMS::dispatch($user,"C4C provides health care workers with communication & resource center with information on COVID-19, Occupational PEP & other health promotion services. MOH")->delay(now()->addMinutes(3));;
+            //$user->sendEmailVerificationNotification();
+
+            $fDepartment = FacilityDepartment::where('department_name', $request->facility_department)->first();
+            $fCadre = Cadre::where('name', $request->cadre)->first();
+
+            $hcw = new HealthCareWorker();
+            $hcw->user_id = $user->id;
+            $hcw->facility_id = $request->facility_id;
+            $hcw->facility_department_id = is_null($fDepartment) ? 1 : $fDepartment->id;
+            $hcw->cadre_id = is_null($fCadre) ? 1 : $fCadre->id;
+            $hcw->dob = $request->dob;
+            $hcw->id_no = $request->id_no;
+            $hcw->saveOrFail();
+
+            $user->profile_complete = 1;
+            $user->update();
+
+
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Registration successful.'
         ], 201);
     }
 

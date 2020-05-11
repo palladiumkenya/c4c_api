@@ -48,6 +48,7 @@ Route::group([
     Route::get('auth/user', 'AuthController@user');
     Route::post('auth/complete_profile', 'ProfileController@complete_profile');
     Route::post('auth/update_profile', 'ProfileController@update_profile');
+    Route::post('auth/bulk/register', 'AuthController@upload_bulk_users');
 
 
     //check in

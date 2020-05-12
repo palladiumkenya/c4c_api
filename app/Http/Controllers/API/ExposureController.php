@@ -33,7 +33,7 @@ class ExposureController extends Controller
 
     public function facility_exposures($id)
     {
-        $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
+        $hcws = HealthCareWorker::where('facility_id',$id)->pluck('user_id');
 
         Log::info("HCWs:". $hcws);
 

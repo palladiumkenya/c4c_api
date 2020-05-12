@@ -193,7 +193,7 @@ class ProfileController extends Controller
 
     public function check_in_history_by_facility($id)
     {
-        $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
+        $hcws = HealthCareWorker::where('facility_id',$id)->pluck('user_id');
         return new GenericCollection(CheckIn::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(10));
     }
 

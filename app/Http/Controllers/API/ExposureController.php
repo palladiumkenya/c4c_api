@@ -10,6 +10,7 @@ use App\Jobs\SendSMS;
 use App\NewExposure;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class ExposureController extends Controller
 {
@@ -33,6 +34,9 @@ class ExposureController extends Controller
     public function facility_exposures($id)
     {
         $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
+
+        Log::info("HCWs:". $hcws);
+
         return new GenericCollection(NewExposure::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(10));
 
     }

@@ -33,7 +33,7 @@ class ExposureController extends Controller
     public function facility_exposures($id)
     {
         $hcws = HealthCareWorker::where('facility_id',$id)->get('user_id');
-        return new GenericCollection(NewExposure::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(10));
+        return new GenericCollection(NewExposure::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(10));
 
     }
 

@@ -118,12 +118,12 @@ class BroadcastsController extends Controller
 
     public function get_facility_broadcast_history($id)
     {
-        return new GenericCollection(BroadCast::where('facility_id', $id)->orderBy('id','desc')->paginate(10));
+        return new GenericCollection(BroadCast::where('facility_id', $id)->orderBy('id','desc')->paginate(100));
     }
 
     public function get_all_broadcast_history()
     {
-        return new GenericCollection(BroadCast::orderBy('id','desc')->paginate(10));
+        return new GenericCollection(BroadCast::orderBy('id','desc')->paginate(100));
     }
 
     public function create_mobile_broadcast(Request $request)

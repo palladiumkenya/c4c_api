@@ -21,13 +21,13 @@ class ExposureController extends Controller
 
     public function exposures()
     {
-        return new GenericCollection(NewExposure::where('user_id', \auth()->user()->id)->orderBy('id','desc')->paginate(10));
+        return new GenericCollection(NewExposure::where('user_id', \auth()->user()->id)->orderBy('id','desc')->paginate(100));
 
     }
 
     public function all_exposures()
     {
-        return new GenericCollection(NewExposure::orderBy('id','desc')->paginate(10));
+        return new GenericCollection(NewExposure::orderBy('id','desc')->paginate(100));
 
     }
 
@@ -37,7 +37,7 @@ class ExposureController extends Controller
 
         Log::info("HCWs:". $hcws);
 
-        return new GenericCollection(NewExposure::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(10));
+        return new GenericCollection(NewExposure::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(100));
 
     }
 

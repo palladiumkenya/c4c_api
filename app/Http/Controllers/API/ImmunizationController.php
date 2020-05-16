@@ -44,23 +44,23 @@ class ImmunizationController extends Controller
 
         Log::info("hcws ", json_decode($hcws));
 
-        return new GenericCollection(Immunization::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(10));
+        return new GenericCollection(Immunization::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(100));
     }
 
     public function facility_immunizations_by_disease($id, $disease_id)
     {
         $hcws = HealthCareWorker::where('facility_id',$id)->pluck('user_id');
-        return new GenericCollection(Immunization::where('disease_id', $disease_id)->orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(10));
+        return new GenericCollection(Immunization::where('disease_id', $disease_id)->orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(100));
     }
 
     public function all_immunizations()
     {
-        return new GenericCollection(Immunization::orderBy('id','desc')->paginate(10));
+        return new GenericCollection(Immunization::orderBy('id','desc')->paginate(100));
     }
 
     public function all_immunizations_by_disease($id)
     {
-        return new GenericCollection(Immunization::where('disease_id', $id)->orderBy('id','desc')->paginate(10));
+        return new GenericCollection(Immunization::where('disease_id', $id)->orderBy('id','desc')->paginate(100));
     }
 
     public function new_immunization(Request $request)

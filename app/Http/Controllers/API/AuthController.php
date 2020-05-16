@@ -44,6 +44,7 @@ class AuthController extends Controller
                 'surname' => $request->surname,
                 'gender' => $request->gender,
                 'email' => $request->email,
+                'consent' => $request->consent ? $request->consent : 1,
                 'msisdn' => $request->msisdn,
                 'password' => bcrypt($request->password),
             ]);

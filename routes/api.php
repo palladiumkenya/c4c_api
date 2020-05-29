@@ -135,6 +135,10 @@ Route::group([
     Route::post('broadcasts/mobile/approve', 'BroadcastsController@approve_mobile_broadcast');
 
 
+    //partners
+    Route::get('partners', 'PartnerController@all_partners');
+
+
 
 
 

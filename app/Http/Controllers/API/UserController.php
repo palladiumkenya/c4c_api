@@ -84,5 +84,11 @@ class UserController extends Controller
     }
 
 
+    public function all_facility_admins()
+    {
+        return new GenericCollection(FacilityAdmin::orderBy('id','desc')->paginate(10));
+    }
+
+
 
 }

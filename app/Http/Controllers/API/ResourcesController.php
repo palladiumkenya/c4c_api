@@ -39,7 +39,7 @@ class ResourcesController extends Controller
 
     public function facilities()
     {
-        return new GenericCollection(Facility::all());
+        return new GenericCollection(Facility::where('active',1)->get());
     }
 
     public function add_facility_department(Request $request)

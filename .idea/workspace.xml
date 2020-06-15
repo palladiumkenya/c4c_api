@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="05459a97-3ee2-41dc-a725-74b573b4880e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/CovidExposure.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CovidExposure.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/ExposureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/ExposureController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -208,7 +208,8 @@
       <workItem from="1590248556067" duration="608000" />
       <workItem from="1590743344083" duration="2092000" />
       <workItem from="1591109842267" duration="345000" />
-      <workItem from="1592214063166" duration="3465000" />
+      <workItem from="1592214063166" duration="4011000" />
+      <workItem from="1592218967336" duration="443000" />
     </task>
     <servers />
   </component>

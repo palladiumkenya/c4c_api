@@ -170,4 +170,11 @@ class ExposureController extends Controller
 
 
     }
+
+
+    public function covid_exposures()
+    {
+        return new GenericCollection(CovidExposure::orderBy('id','desc')->paginate(20));
+
+    }
 }

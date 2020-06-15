@@ -72,6 +72,7 @@ Route::group([
     Route::get('exposures/all', 'ExposureController@all_exposures');
     Route::get('exposures/facility/{_id}', 'ExposureController@facility_exposures');
     Route::post('exposures/new', 'ExposureController@new_exposure');
+    Route::post('exposures/covid/new', 'ExposureController@new_covid_exposure');
 
     //feedback
     Route::post('feedback', 'ResourcesController@post_feedback');

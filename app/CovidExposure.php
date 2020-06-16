@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class CovidExposure extends Model
@@ -10,6 +11,12 @@ class CovidExposure extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function getDateOfContactAttribute($value)
+    {
+        $date = Carbon::parse($value);
+        return $date->isoFormat('MMM Do YYYY');
     }
 
 

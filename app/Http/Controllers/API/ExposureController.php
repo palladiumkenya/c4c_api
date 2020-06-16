@@ -93,6 +93,7 @@ class ExposureController extends Controller
             'id_no' => 'required',
             'date_of_contact' => 'required',
             'ppe_worn' => 'required',
+            'place_of_diagnosis' => 'required',
             'ipc_training' => 'required',
             'pcr_test' => 'required',
             'management' => 'required',
@@ -111,6 +112,7 @@ class ExposureController extends Controller
             $cExposure->user_id = auth()->user()->id;
             $cExposure->id_no = $request->id_no;
             $cExposure->contact_with = $request->contact_with;
+            $cExposure->place_of_diagnosis = $request->place_of_diagnosis;
             $cExposure->date_of_contact = $request->date_of_contact;
             $cExposure->ppe_worn = $request->ppe_worn;
             $cExposure->ppes = $request->ppes;

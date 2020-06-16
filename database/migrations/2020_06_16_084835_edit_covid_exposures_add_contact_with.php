@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EditFacilitiesAddActive extends Migration
+class EditCovidExposuresAddContactWith extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class EditFacilitiesAddActive extends Migration
      */
     public function up()
     {
-        Schema::table('facilities', function(Blueprint $table)
+        Schema::table('covid_exposures', function(Blueprint $table)
         {
-            $table->tinyInteger('active')->default(0);
+            $table->string('contact_with')->after('isolation_start_date');
         });
     }
 
@@ -26,9 +26,9 @@ class EditFacilitiesAddActive extends Migration
      */
     public function down()
     {
-        Schema::table('facilities', function(Blueprint $table)
+        Schema::table('covid_exposures', function(Blueprint $table)
         {
-            $table->dropColumn('active');
+            $table->dropColumn('covid_exposures');
         });
     }
 }

@@ -89,6 +89,7 @@ class ExposureController extends Controller
     public function new_covid_exposure(Request $request)
     {
         $request->validate([
+            'contact_with' => 'required',
             'id_no' => 'required',
             'date_of_contact' => 'required',
             'ppe_worn' => 'required',
@@ -109,6 +110,7 @@ class ExposureController extends Controller
             $cExposure = new CovidExposure();
             $cExposure->user_id = auth()->user()->id;
             $cExposure->id_no = $request->id_no;
+            $cExposure->contact_with = $request->contact_with;
             $cExposure->date_of_contact = $request->date_of_contact;
             $cExposure->ppe_worn = $request->ppe_worn;
             $cExposure->ppes = $request->ppes;
@@ -180,6 +182,22 @@ class ExposureController extends Controller
     public function covid_exposures()
     {
         return new GenericCollection(CovidExposure::orderBy('id','desc')->paginate(20));
+
+    }
+
+    public function my_covid_exposures()
+    {
+        return new GenericCollection(CovidExposure::where('user_id', \auth()->user()->id)->orderBy('id','desc')->paginate(20));
+
+    }
+
+    public function facility_covid_exposures($id)
+    {
+        $hcws = HealthCareWorker::where('facility_id',$id)->pluck('user_id');
+
+        Log::info("HCWs:". $hcws);
+
+        return new GenericCollection(CovidExposure::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(20));
 
     }
 }

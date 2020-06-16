@@ -119,7 +119,7 @@ class ExposureController extends Controller
             $cExposure->isolation_start_date = $request->isolation_start_date;
             $cExposure->saveOrFail();
 
-            $ENDPOINT = "http://ears-covid-test.mhealthkenya.co.ke/api/register";
+            $ENDPOINT = "http://ears-covid.mhealthkenya.co.ke/api/register";
 
             $data=array();
             $data['first_name'] = auth()->user()->first_name;

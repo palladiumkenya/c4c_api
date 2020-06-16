@@ -155,6 +155,10 @@ class ExposureController extends Controller
             $result=curl_exec($ch);
             curl_close($ch);
 
+            Log::info("Sending data===>");
+            Log::info(json_decode($data, true));
+            Log::info("Response from jitenge===>");
+
             Log::info(json_decode($result, true));
 
             send_sms(auth()->user()->msisdn,  "Hello ".auth()->user()->first_name.", the exposure is regrettable. Kindly self isolate yourself and follow Jitenge guidelines to report your daily symptoms. Download the Jitenge app from playstore.");

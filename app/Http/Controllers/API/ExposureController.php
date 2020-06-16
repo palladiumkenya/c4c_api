@@ -156,7 +156,7 @@ class ExposureController extends Controller
             curl_close($ch);
 
             Log::info("Sending data===>");
-            Log::info(json_decode($data, true));
+            //Log::info(json_decode($data, true));
             Log::info("Response from jitenge===>");
 
             Log::info(json_decode($result, true));

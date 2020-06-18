@@ -180,6 +180,97 @@ class ExposureController extends Controller
 
     }
 
+    public function new_ussd_covid_exposure(Request $request)
+    {
+        $request->validate([
+            'contact_with' => 'required',
+            'id_no' => 'required',
+            'date_of_contact' => 'required',
+            'ppe_worn' => 'required',
+            'place_of_diagnosis' => 'required',
+            'ipc_training' => 'required',
+            'pcr_test' => 'required',
+            'management' => 'required',
+            'isolation_start_date' => 'required',
+        ],[
+//            'device_id.required' => 'Please select the device in use during exposure'
+        ]);
+
+
+        DB::transaction(function() use ($request) {
+
+            $cExposure = new CovidExposure();
+            $cExposure->user_id = auth()->user()->id;
+            $cExposure->id_no = $request->id_no;
+            $cExposure->contact_with = $request->contact_with;
+            $cExposure->place_of_diagnosis = $request->place_of_diagnosis;
+            $cExposure->date_of_contact = $request->date_of_contact;
+            $cExposure->ppe_worn = $request->ppe_worn;
+            $cExposure->ppes = $request->ppes;
+            $cExposure->ipc_training = $request->ipc_training;
+            $cExposure->symptoms	 = $request->symptoms	;
+            $cExposure->pcr_test = $request->pcr_test;
+            $cExposure->management = $request->management;
+            $cExposure->isolation_start_date = $request->isolation_start_date;
+            $cExposure->saveOrFail();
+
+            $ENDPOINT = "http://localhost:3000/api/register";
+//            $ENDPOINT = "https://ears-covid.mhealthkenya.co.ke/api/register";
+
+            $data=array();
+            $data['first_name'] = auth()->user()->first_name;
+            $data['last_name'] = auth()->user()->surname;
+            $data['sex'] = auth()->user()->gender;
+            $data['dob'] = optional(auth()->user()->hcw)->dob;
+            $data['passport_number'] =$request->id_no;
+            $data['phone_number'] = "+".auth()->user()->msisdn;
+            $data['email_address'] = auth()->user()->email;
+            $data['origin_country'] = "KENYA";
+            $data['place_of_diagnosis'] = $request->place_of_diagnosis;
+            $data['date_of_contact'] = $request->date_of_contact;
+            $data['county_id'] = 2620;
+            $data['subcounty_id'] = 2620;
+            $data['ward_id'] = 2620;
+            $body = http_build_query($data);
+
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, $ENDPOINT); // point to endpoint
+//        curl_setopt($ch,CURLOPT_HTTPHEADER,array($HEADER));
+
+            curl_setopt($ch, CURLOPT_VERBOSE, true);
+            // curl_setopt($ch, CURLOPT_STDERR, $fp);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);  //data
+            curl_setopt($ch, CURLOPT_TIMEOUT, 60);// request time out
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, '0'); // no ssl verifictaion
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, '0');
+
+
+            $result=curl_exec($ch);
+            curl_close($ch);
+
+            Log::info("Sending data===>");
+            //Log::info(json_decode($data, true));
+            Log::info("Response from jitenge===>");
+
+            Log::info(json_decode($result, true));
+
+            send_sms(auth()->user()->msisdn,  "Hello ".auth()->user()->first_name.", the exposure is regrettable. Kindly self isolate yourself and follow Jitenge guidelines to report your daily symptoms. Download the Jitenge app from playstore.");
+
+
+        });
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Covid-19 Exposure has been reported successfully '
+        ], 201);
+
+
+    }
+
 
     public function covid_exposures()
     {

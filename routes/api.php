@@ -73,6 +73,7 @@ Route::group([
     Route::get('exposures/facility/{_id}', 'ExposureController@facility_exposures');
     Route::post('exposures/new', 'ExposureController@new_exposure');
     Route::post('exposures/covid/new', 'ExposureController@new_covid_exposure');
+    Route::post('exposures/covid/new/ussd', 'ExposureController@new_ussd_covid_exposure');
     Route::get('exposures/covid/all', 'ExposureController@covid_exposures');
     Route::get('exposures/covid/facility/{_id}', 'ExposureController@facility_covid_exposures');
     Route::get('exposures/covid', 'ExposureController@my_covid_exposures');

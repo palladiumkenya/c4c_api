@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="05459a97-3ee2-41dc-a725-74b573b4880e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/CovidExposure.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CovidExposure.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/ExposureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/ExposureController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_15_094305_create_covid_exposures_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_06_15_094305_create_covid_exposures_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_16_084835_edit_covid_exposures_add_contact_with.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_16_173040_edit_covid_exposures_add_place_of_diagnosis.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,6 +213,9 @@
       <workItem from="1592214063166" duration="4011000" />
       <workItem from="1592218967336" duration="5406000" />
       <workItem from="1592326921922" duration="1449000" />
+      <workItem from="1592474641831" duration="1655000" />
+      <workItem from="1592811572008" duration="866000" />
+      <workItem from="1593404832668" duration="5640000" />
     </task>
     <servers />
   </component>

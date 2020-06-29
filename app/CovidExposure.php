@@ -13,10 +13,64 @@ class CovidExposure extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function facilityOfExposure()
+    {
+        return $this->belongsTo('App\Facility', 'facility_of_exposure_id');
+    }
+
     public function getDateOfContactAttribute($value)
     {
         $date = Carbon::parse($value);
         return $date->isoFormat('MMM Do YYYY');
+    }
+
+    public function getPpeWornAttribute($value)
+    {
+        if ($value != null){
+            return $value = 1 ? 'Yes' : 'No';
+        }
+        return $value;
+    }
+
+    public function getIpcTrainingAttribute($value)
+    {
+        if ($value != null){
+            return $value = 1 ? 'Yes' : 'No';
+        }
+        return $value;
+    }
+
+    public function getIpcTrainingPeriodAttribute($value)
+    {
+        if ($value != null){
+            $st = $value > 1 ? ' years ago' : ' year ago';
+            return $value .  $st;
+        }
+        return $value;
+    }
+
+    public function getCovidSpecificTrainingAttribute($value)
+    {
+        if ($value != null){
+            return $value = 1 ? 'Yes' : 'No';
+        }
+        return $value;
+    }
+
+    public function getRiskAssessmentPerformedAttribute($value)
+    {
+        if ($value != null){
+            return $value = 1 ? 'Yes' : 'No';
+        }
+        return $value;
+    }
+
+    public function getPcrTestDoneAttribute($value)
+    {
+        if ($value != null){
+            return $value = 1 ? 'Yes' : 'No';
+        }
+        return $value;
     }
 
 
@@ -25,6 +79,7 @@ class CovidExposure extends Model
         $data['first_name'] = optional($this->user)->first_name;
         $data['surname'] = optional($this->user)->surname;
         $data['facility'] = optional(optional(optional($this->user)->hcw)->facility)->name;
+        $data['facility_of_exposure'] = optional($this->facilityOfExposure)->name;
         $data['facility_id'] = optional(optional(optional($this->user)->hcw)->facility)->id;
         $data['facility_level'] = optional(optional(optional($this->user)->hcw)->facility)->keph_level;
         $data['dob'] = optional(optional($this->user)->hcw)->dob;

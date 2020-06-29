@@ -89,14 +89,17 @@ class ExposureController extends Controller
     public function new_covid_exposure(Request $request)
     {
         $request->validate([
-            'contact_with' => 'required',
             'id_no' => 'required',
             'date_of_contact' => 'required',
+            'transmission_mode' => 'required',
+            'contact_with' => 'required',
+            'direct_covid_environment_contact' => 'required',
             'ppe_worn' => 'required',
-            'place_of_diagnosis' => 'required',
             'ipc_training' => 'required',
-            'pcr_test' => 'required',
-            'management' => 'required',
+            'covid_specific_training' => 'required',
+            'risk_assessment_performed' => 'required',
+            'pcr_test_done' => 'required',
+            'exposure_management' => 'required',
             'isolation_start_date' => 'required',
             'county_id' => 'required',
             'subcounty_id' => 'required',
@@ -111,15 +114,25 @@ class ExposureController extends Controller
             $cExposure = new CovidExposure();
             $cExposure->user_id = auth()->user()->id;
             $cExposure->id_no = $request->id_no;
-            $cExposure->contact_with = $request->contact_with;
-            $cExposure->place_of_diagnosis = $request->place_of_diagnosis;
             $cExposure->date_of_contact = $request->date_of_contact;
+            $cExposure->transmission_mode = $request->transmission_mode;
+            $cExposure->facility_of_exposure_id = $request->facility_of_exposure_id;
+            $cExposure->procedure_perfomed = $request->procedure_perfomed;
+            $cExposure->contact_with = $request->contact_with;
+            $cExposure->direct_covid_environment_contact = $request->direct_covid_environment_contact;
             $cExposure->ppe_worn = $request->ppe_worn;
             $cExposure->ppes = $request->ppes;
             $cExposure->ipc_training = $request->ipc_training;
-            $cExposure->symptoms	 = $request->symptoms	;
-            $cExposure->pcr_test = $request->pcr_test;
-            $cExposure->management = $request->management;
+            $cExposure->ipc_training_period = $request->ipc_training_period;
+            $cExposure->covid_specific_training = $request->covid_specific_training;
+            $cExposure->symptoms = $request->symptoms;
+            $cExposure->risk_assessment_performed = $request->risk_assessment_performed;
+            $cExposure->risk_assessment_outcome = $request->risk_assessment_outcome;
+            $cExposure->risk_assessment_recommendation = $request->risk_assessment_recommendation;
+            $cExposure->risk_assessment_decision_date = $request->risk_assessment_decision_date;
+            $cExposure->pcr_test_done = $request->pcr_test_done;
+            $cExposure->pcr_test_results = $request->pcr_test_results;
+            $cExposure->exposure_management = $request->exposure_management;
             $cExposure->isolation_start_date = $request->isolation_start_date;
             $cExposure->saveOrFail();
 
@@ -134,8 +147,9 @@ class ExposureController extends Controller
             $data['passport_number'] =$request->id_no;
             $data['phone_number'] = "+".auth()->user()->msisdn;
             $data['email_address'] = auth()->user()->email;
+            $data['nationality'] = "KENYA";
             $data['origin_country'] = "KENYA";
-            $data['place_of_diagnosis'] = $request->place_of_diagnosis;
+            $data['place_of_diagnosis'] = "C4C";
             $data['date_of_contact'] = $request->date_of_contact;
             $data['county_id'] = $request->county_id;
             $data['subcounty_id'] = $request->subcounty_id;
@@ -166,8 +180,10 @@ class ExposureController extends Controller
 
             Log::info(json_decode($result, true));
 
-            send_sms(auth()->user()->msisdn,  "Hello ".auth()->user()->first_name.", the exposure is regrettable. Kindly self isolate yourself and follow Jitenge guidelines to report your daily symptoms. Download the Jitenge app from playstore.");
 
+            send_sms(auth()->user()->msisdn,  "Dear ".auth()->user()->first_name.", Welcome to COVID-19 Exposure follow-up, it’s regrettable, Please note that you will be required to report on your symptoms daily for the next 14 days. MOH");
+            SendSMS::dispatch(auth()->user(),"Dear ".auth()->user()->first_name.", thank you for observing your IPC guidelines. Have you had a COVID-19 PCR test? YES or NO. MOH")->delay(now()->addDays(8));
+            SendSMS::dispatch(auth()->user(),"Dear ".auth()->user()->first_name.", thank you for observing the IPC guidelines, you have now completed the 14 days quarantine period. Have you resumed work? MOH")->delay(now()->addDays(15));
 
         });
 
@@ -225,6 +241,7 @@ class ExposureController extends Controller
             $data['passport_number'] =$request->id_no;
             $data['phone_number'] = "+".auth()->user()->msisdn;
             $data['email_address'] = auth()->user()->email;
+            $data['nationality'] = "KENYA";
             $data['origin_country'] = "KENYA";
             $data['place_of_diagnosis'] = $request->place_of_diagnosis;
             $data['date_of_contact'] = $request->date_of_contact;

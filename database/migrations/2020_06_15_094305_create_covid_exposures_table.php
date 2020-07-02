@@ -26,8 +26,9 @@ class CreateCovidExposuresTable extends Migration
             $table->boolean('ppe_worn'); // return yes or no
             $table->text('ppes')->nullable();
             $table->boolean('ipc_training'); // return yes or no
-            $table->integer('ipc_training_period')->nullable(); //return this with 'years ago' if not null
+            $table->integer('ipc_training_period')->nullable(); //return this with 'months or years ago' if not null
             $table->boolean('covid_specific_training'); // return yes or no
+            $table->string('covid_training_period')->nullable();
             $table->text('symptoms')->nullable();
             $table->boolean('risk_assessment_performed'); // return yes or no
             $table->string('risk_assessment_outcome')->nullable();

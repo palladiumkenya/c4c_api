@@ -43,8 +43,9 @@ class CovidExposure extends Model
     public function getIpcTrainingPeriodAttribute($value)
     {
         if ($value != null){
-            $st = $value > 1 ? ' years ago' : ' year ago';
-            return $value .  $st;
+            $st = $value < 12 ? ' months ago' : ' years ago';
+            $duration = $value < 12 ? $value : $value/12;
+            return $duration .  $st;
         }
         return $value;
     }

@@ -125,6 +125,7 @@ class ExposureController extends Controller
             $cExposure->ipc_training = $request->ipc_training;
             $cExposure->ipc_training_period = $request->ipc_training_period;
             $cExposure->covid_specific_training = $request->covid_specific_training;
+            $cExposure->covid_training_period = $request->covid_training_period;
             $cExposure->symptoms = $request->symptoms;
             $cExposure->risk_assessment_performed = $request->risk_assessment_performed;
             $cExposure->risk_assessment_outcome = $request->risk_assessment_outcome;

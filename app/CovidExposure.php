@@ -40,15 +40,15 @@ class CovidExposure extends Model
         return $value;
     }
 
-    public function getIpcTrainingPeriodAttribute($value)
-    {
-        if ($value != null){
-            $st = $value < 12 ? ' months ago' : ' years ago';
-            $duration = $value < 12 ? $value : $value/12;
-            return $duration .  $st;
-        }
-        return $value;
-    }
+//    public function getIpcTrainingPeriodAttribute($value)
+//    {
+//        if ($value != null){
+//            $st = $value < 12 ? ' months ago' : ' years ago';
+//            $duration = $value < 12 ? $value : $value/12;
+//            return $duration .  $st;
+//        }
+//        return $value;
+//    }
 
     public function getCovidSpecificTrainingAttribute($value)
     {

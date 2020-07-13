@@ -22,6 +22,7 @@ use App\SpecialResourceFile;
 use App\SubCounty;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -39,7 +40,16 @@ class ResourcesController extends Controller
 
     public function facilities()
     {
-        return new GenericCollection(Facility::where('active',1)->get());
+
+        $facilities = Cache::get('facilities', function () {
+            return DB::table('facilities')->get();
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $facilities
+        ], 200);
+
     }
 
     public function add_facility_department(Request $request)

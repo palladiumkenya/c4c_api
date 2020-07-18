@@ -25,6 +25,10 @@ Route::group([
     Route::post('verify_otp', 'AuthController@verify_otp');
     Route::post('reset_password', 'AuthController@reset_password');
 
+
+    Route::get('resources/special', 'ResourcesController@get_special_resources');
+    Route::get('resources/special/{id}', 'ResourcesController@get_special_resource');
+
 });
 
 //Route::group([
@@ -124,8 +128,7 @@ Route::group([
 
     Route::post('resources/special/create', 'ResourcesController@create_special_resource');
     Route::post('resources/special/update', 'ResourcesController@update_special_resource');
-    Route::get('resources/special', 'ResourcesController@get_special_resources');
-    Route::get('resources/special/{id}', 'ResourcesController@get_special_resource');
+
     Route::delete('resources/special/delete/{id}', 'ResourcesController@delete_special_resource');
 
 

@@ -26,20 +26,15 @@ Route::group([
     Route::post('reset_password', 'AuthController@reset_password');
 
 
-    Route::get('resources/special', 'ResourcesController@get_special_resources');
-    Route::get('resources/special/{id}', 'ResourcesController@get_special_resource');
-
 });
 
-//Route::group([
-//    'namespace' => 'API',
-//    'middleware' => 'api',
-//    'prefix' => 'password'
-//], function () {
-//    Route::post('request', 'PasswordResetController@request');
-////    Route::get('find/{token}', 'PasswordResetController@find');
-//    Route::post('reset', 'PasswordResetController@reset');
-//});
+Route::group([
+    'namespace' => 'API',
+    'middleware' => 'api',
+], function () {
+    Route::get('resources/special', 'ResourcesController@get_special_resources');
+    Route::get('resources/special/{id}', 'ResourcesController@get_special_resource');
+});
 
 
 Route::group([

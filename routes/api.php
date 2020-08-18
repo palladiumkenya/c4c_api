@@ -134,6 +134,8 @@ Route::group([
     Route::get('broadcasts/web/history/{id}', 'BroadcastsController@get_facility_broadcast_history');
     Route::get('broadcasts/web/all', 'BroadcastsController@get_all_broadcast_history');
 
+    Route::post('broadcasts/nascop/create', 'BroadcastsController@create_nascop_broadcast');
+
     Route::post('broadcasts/mobile/create', 'BroadcastsController@create_mobile_broadcast');
     Route::get('broadcasts/mobile/pending', 'BroadcastsController@pending_mobile_broadcasts');
     Route::get('broadcasts/mobile/approved', 'BroadcastsController@approved_mobile_broadcasts');

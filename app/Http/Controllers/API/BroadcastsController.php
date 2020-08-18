@@ -10,6 +10,7 @@ use App\Http\Resources\GenericCollection;
 use App\Jobs\SendDirectSMS;
 use App\Jobs\SendSMS;
 use App\Outbox;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -281,6 +282,58 @@ class BroadcastsController extends Controller
         ], 200);
 
     }
+
+
+
+    public function create_nascop_broadcast(Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date|after_or_equal:today',
+            'time' => 'required',
+            'instant' => 'required',
+            'data' => 'required',
+        ],[
+//            'facility_id.exists' => 'Invalid facility ID',
+        ]);
+
+        if ($request->instant == 1){
+
+            foreach($request['data'] as $recipient) {
+
+
+                Log::info("queueing NASCOP sms...");
+                SendDirectSMS::dispatch($recipient['to'], $recipient['message']);
+                Log::info("NASCOP sms queued...");
+
+            }
+
+        }else{
+
+            $scheduled = Carbon::createFromFormat('Y-m-d H:i', $request->date.' '.$request->time);
+
+            $diff_in_minutes = $scheduled->diffInMinutes(Carbon::now());
+//            print_r($scheduled);
+//            print_r(Carbon::now());
+//            print_r($diff_in_minutes);
+
+
+            foreach($request['data'] as $recipient) {
+
+
+                Log::info("queueing NASCOP sms...");
+                SendDirectSMS::dispatch($recipient['to'], $recipient['message'])->delay(now()->addMinutes($diff_in_minutes));
+                Log::info("NASCOP sms queued...");
+
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Messages have been queued successfully'
+        ], 200);
+
+    }
+
 
 
 

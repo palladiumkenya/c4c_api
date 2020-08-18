@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05459a97-3ee2-41dc-a725-74b573b4880e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/BroadcastsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/BroadcastsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -215,7 +218,11 @@
       <workItem from="1593849252252" duration="218000" />
       <workItem from="1594187688869" duration="701000" />
       <workItem from="1594616510117" duration="1965000" />
-      <workItem from="1595043436944" duration="259000" />
+      <workItem from="1595043436944" duration="474000" />
+      <workItem from="1595318889321" duration="887000" />
+      <workItem from="1595352776042" duration="13000" />
+      <workItem from="1597344438932" duration="372000" />
+      <workItem from="1597728115693" duration="2077000" />
     </task>
     <servers />
   </component>

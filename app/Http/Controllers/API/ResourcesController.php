@@ -41,9 +41,27 @@ class ResourcesController extends Controller
     public function facilities()
     {
 
-        $facilities = Cache::get('facilities', function () {
-            return DB::table('facilities')->get();
-        });
+//        $facilities = Cache::get('facilities', function () {
+//            return DB::table('facilities')->get();
+//        });
+
+        $facilities = Facility::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $facilities
+        ], 200);
+
+    }
+
+    public function facilities_paginated()
+    {
+
+//        $facilities = Cache::get('facilities', function () {
+//            return DB::table('facilities')->get();
+//        });
+
+        $facilities = Facility::paginate(50);
 
         return response()->json([
             'success' => true,

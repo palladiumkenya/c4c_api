@@ -86,6 +86,7 @@ Route::group([
     //collections
     Route::get('diseases', 'ResourcesController@diseases');
     Route::get('facilities', 'ResourcesController@facilities');
+    Route::get('facilities_paginated', 'ResourcesController@facilities_paginated');
     Route::post('facilities/department/add', 'ResourcesController@add_facility_department');
     Route::get('facility_departments/{id}', 'ResourcesController@facility_departments');
     Route::get('cadres', 'ResourcesController@cadres');

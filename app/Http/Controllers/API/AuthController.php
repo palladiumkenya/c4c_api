@@ -99,6 +99,7 @@ class AuthController extends Controller
                 'surname' => $request->surname,
                 'gender' => $request->gender,
                 'email' => $request->email,
+                'consent' => $request->consent,
                 'msisdn' => $request->msisdn,
                 'password' => bcrypt($request->msisdn),
             ]);

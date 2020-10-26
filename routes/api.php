@@ -152,5 +152,6 @@ Route::group([
 
 
 Route::post('broadcasts/nascop/create', 'API\BroadcastsController@create_nascop_broadcast');
+Route::post('profiles/complete', 'API\ActionsController@complete_profiles');
 
 

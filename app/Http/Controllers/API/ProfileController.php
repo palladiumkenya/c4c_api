@@ -44,14 +44,28 @@ class ProfileController extends Controller
 
             $user = \auth()->user();
 
-            $hcw = new HealthCareWorker();
-            $hcw->user_id = $user->id;
-            $hcw->facility_id = $request->facility_id;
-            $hcw->facility_department_id = $request->facility_department_id;
-            $hcw->cadre_id = $request->cadre_id;
-            $hcw->dob = $request->dob;
-            $hcw->id_no = $request->id_no;
-            $hcw->saveOrFail();
+            $hcw = HealthCareWorker::where('user_id',$user->id)->first();
+
+            if (is_null($hcw)){
+                $hcw = new HealthCareWorker();
+                $hcw->user_id = $user->id;
+                $hcw->facility_id = $request->facility_id;
+                $hcw->facility_department_id = $request->facility_department_id;
+                $hcw->cadre_id = $request->cadre_id;
+                $hcw->dob = $request->dob;
+                $hcw->id_no = $request->id_no;
+                $hcw->saveOrFail();
+            }else{
+
+                $hcw->facility_id = $request->facility_id;
+                $hcw->facility_department_id = $request->facility_department_id;
+                $hcw->cadre_id = $request->cadre_id;
+                $hcw->dob = $request->dob;
+                $hcw->id_no = $request->id_no;
+                $hcw->update();
+            }
+
+
 
             $user->profile_complete = 1;
             $user->update();

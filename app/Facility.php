@@ -26,6 +26,7 @@ class Facility extends Model
         $data['county'] = optional($this->county)->name;
         $data['sub_county'] = optional($this->sub_county)->name;
         $data['level'] = $this->keph_level;
+        $data['active'] = $this->active;
 
         return $data;
     }

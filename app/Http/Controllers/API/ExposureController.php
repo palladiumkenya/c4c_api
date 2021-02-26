@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\CovidExposure;
 use App\Exposure;
 use App\HealthCareWorker;
+use App\PartnerUser;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use App\Jobs\SendSMS;
@@ -36,6 +37,16 @@ class ExposureController extends Controller
     public function facility_exposures($id)
     {
         $hcws = HealthCareWorker::where('facility_id',$id)->pluck('user_id');
+
+        Log::info("HCWs:". $hcws);
+
+        return new GenericCollection(NewExposure::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(100));
+
+    }
+
+    public function partner_exposures($id)
+    {
+        $hcws = PartnerUser::where('partner_id',$id)->pluck('user_id');
 
         Log::info("HCWs:". $hcws);
 

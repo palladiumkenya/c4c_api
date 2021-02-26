@@ -61,7 +61,9 @@ Route::group([
     //immunizations
     Route::get('immunizations', 'ImmunizationController@immunizations');
     Route::get('immunizations/facility/{id}', 'ImmunizationController@facility_immunizations');
+    Route::get('immunizations/partner/{id}', 'ImmunizationController@partner_immunizations');
     Route::get('immunizations/facility/{id}/disease/{disease_id}', 'ImmunizationController@facility_immunizations_by_disease');
+    Route::get('immunizations/partner/{id}/disease/{disease_id}', 'ImmunizationController@partner_immunizations_by_disease');
     Route::get('immunizations/all', 'ImmunizationController@all_immunizations');
     Route::get('immunizations/all/disease/{id}', 'ImmunizationController@all_immunizations_by_disease');
     Route::post('immunizations/new', 'ImmunizationController@new_immunization');
@@ -101,6 +103,7 @@ Route::group([
     Route::post('facility_admin/assign', 'UserController@assign_facility_admin');
     Route::get('facility_admin/{id}', 'UserController@get_facility_admin');
     Route::get('/facility/admins/all', 'UserController@all_facility_admins');
+    Route::get('/partner/users/all', 'UserController@all_partner_users');
 
     //devices
     Route::get('devices/facility/{id}', 'DevicesController@facility_devices');

@@ -8,6 +8,7 @@ use App\Disease;
 use App\Facility;
 use App\FacilityAdmin;
 use App\HealthCareWorker;
+use App\PartnerUser;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use App\Otp;
@@ -87,6 +88,11 @@ class UserController extends Controller
     public function all_facility_admins()
     {
         return new GenericCollection(FacilityAdmin::orderBy('id','desc')->paginate(10));
+    }
+
+    public function all_partner_users()
+    {
+        return new GenericCollection(PartnerUser::orderBy('id','desc')->paginate(100));
     }
 
 

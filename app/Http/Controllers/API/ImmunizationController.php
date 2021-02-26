@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Disease;
 use App\HealthCareWorker;
+use App\PartnerUser;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use Illuminate\Http\Request;
@@ -47,9 +48,24 @@ class ImmunizationController extends Controller
         return new GenericCollection(Immunization::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(100));
     }
 
+    public function partner_immunizations($id)
+    {
+        $hcws = PartnerUser::where('partner_id',$id)->pluck('user_id');
+
+        Log::info("hcws ", json_decode($hcws));
+
+        return new GenericCollection(Immunization::orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(100));
+    }
+
     public function facility_immunizations_by_disease($id, $disease_id)
     {
         $hcws = HealthCareWorker::where('facility_id',$id)->pluck('user_id');
+        return new GenericCollection(Immunization::where('disease_id', $disease_id)->orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(100));
+    }
+
+    public function partner_immunizations_by_disease($id, $disease_id)
+    {
+        $hcws = PartnerUser::where('partner_id',$id)->pluck('user_id');
         return new GenericCollection(Immunization::where('disease_id', $disease_id)->orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(100));
     }
 

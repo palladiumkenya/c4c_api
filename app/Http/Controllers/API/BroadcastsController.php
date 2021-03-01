@@ -125,7 +125,7 @@ class BroadcastsController extends Controller
 
     public function get_partner_broadcast_history($id)
     {
-        $hcws = PartnerFacility::where('partner_id',$id)->pluck('facility_id');
+        $hcws = PartnerFacility::where('partner_id',$id)->pluck('facility_id')->first();
 
         Log::info("HCWs:". $hcws);
 

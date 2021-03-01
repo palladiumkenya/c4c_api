@@ -82,7 +82,7 @@ class UserController extends Controller
         if (is_null($facility))
             abort(404, "Facility does not exist");
 
-        return new GenericCollection(FacilityAdmin::where('facility_id', $id)->paginate(10));
+        return new GenericCollection(FacilityAdmin::where('facility_id', '=', $id)->paginate(10));
     }
 
     public function get_partner_users($id)
@@ -91,7 +91,7 @@ class UserController extends Controller
         if (is_null($partner))
             abort(404, "Partner does not exist");
 
-        return new GenericCollection(PartnerUser::where('partner_id', $id)->paginate(100));
+        return new GenericCollection(PartnerUser::where('partner_id', '=', $id)->paginate(100));
     }
 
 

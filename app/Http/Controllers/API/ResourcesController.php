@@ -514,7 +514,7 @@ class ResourcesController extends Controller
 
         Log::info("HCWs:". $hcws);
 
-        return new GenericCollection(FacilityProtocol::where('facility_id',$hcws)->paginate(20));
+        return new GenericCollection(FacilityProtocol::where('facility_id', '=',$hcws)->paginate(20));
     }
 
     public function get_hcw_partner_protocols()

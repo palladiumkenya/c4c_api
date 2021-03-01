@@ -6,6 +6,7 @@ use App\BroadCast;
 use App\Cadre;
 use App\Cme;
 use App\HealthCareWorker;
+use App\PartnerFacility;
 use App\Http\Resources\GenericCollection;
 use App\Jobs\SendDirectSMS;
 use App\Jobs\SendSMS;
@@ -120,6 +121,15 @@ class BroadcastsController extends Controller
     public function get_facility_broadcast_history($id)
     {
         return new GenericCollection(BroadCast::where('facility_id', $id)->orderBy('id','desc')->paginate(100));
+    }
+
+    public function get_partner_broadcast_history($id)
+    {
+        $hcws = PartnerFacility::where('partner_id',$id)->pluck('facility_id');
+
+        Log::info("HCWs:". $hcws);
+
+        return new GenericCollection(BroadCast::where('facility_id', $hcws)->orderBy('id','desc')->paginate(100));
     }
 
     public function get_all_broadcast_history()

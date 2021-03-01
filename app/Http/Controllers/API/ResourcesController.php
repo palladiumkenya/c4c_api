@@ -9,6 +9,7 @@ use App\County;
 use App\Device;
 use App\Disease;
 use App\Facility;
+use App\PartnerFacility;
 use App\FacilityDepartment;
 use App\FacilityProtocol;
 use App\FacilityProtocolFile;
@@ -57,10 +58,6 @@ class ResourcesController extends Controller
     public function facilities_paginated()
     {
 
-//        $facilities = Cache::get('facilities', function () {
-//            return DB::table('facilities')->get();
-//        });
-
         $facilities = Facility::paginate(50);
 
         return response()->json([
@@ -69,6 +66,18 @@ class ResourcesController extends Controller
         ], 200);
 
     }
+
+    public function partner_facilities($id)
+    {
+        $hcws = PartnerFacility::where('partner_id',$id)->pluck('facility_id');
+
+        Log::info("HCWs:". $hcws);
+
+        return new GenericCollection(Facility::where('id', $hcws)->orderBy('id','desc')->paginate(100));
+
+    }
+
+
 
     public function add_facility_department(Request $request)
     {
@@ -499,7 +508,16 @@ class ResourcesController extends Controller
 
 
 
-    public function get_hcw_facility_protocols()
+    public function get_partner_protocols($id)
+    {
+        $hcws = PartnerFacility::where('partner_id',$id)->pluck('facility_id');
+
+        Log::info("HCWs:". $hcws);
+
+        return new GenericCollection(FacilityProtocol::where('facility_id',$hcws)->paginate(20));
+    }
+
+    public function get_hcw_partner_protocols()
     {
         $user = auth()->user();
 

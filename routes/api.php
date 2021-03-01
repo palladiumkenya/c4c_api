@@ -89,6 +89,7 @@ Route::group([
     //collections
     Route::get('diseases', 'ResourcesController@diseases');
     Route::get('facilities', 'ResourcesController@facilities');
+    Route::get('facilities/{id}', 'ResourcesController@partner_facilities');
     Route::get('facilities_paginated', 'ResourcesController@facilities_paginated');
     Route::post('facilities/department/add', 'ResourcesController@add_facility_department');
     Route::get('facility_departments/{id}', 'ResourcesController@facility_departments');
@@ -125,6 +126,8 @@ Route::group([
     Route::delete('resources/protocols/delete/{id}', 'ResourcesController@delete_facility_protocol');
 
     Route::get('resources/hcw/protocols', 'ResourcesController@get_hcw_facility_protocols');
+    Route::get('resources/protocols/partner/{id}', 'ResourcesController@get_partner_protocols');
+
 
     Route::post('resources/special/create', 'ResourcesController@create_special_resource');
     Route::post('resources/special/update', 'ResourcesController@update_special_resource');
@@ -137,6 +140,7 @@ Route::group([
     Route::post('broadcasts/web/create', 'BroadcastsController@create_web_broadcast');
     Route::post('broadcasts/web/direct', 'BroadcastsController@create_web_direct_broadcast');
     Route::get('broadcasts/web/history/{id}', 'BroadcastsController@get_facility_broadcast_history');
+    Route::get('broadcasts/web/partner/history/{id}', 'BroadcastsController@get_partner_broadcast_history');
     Route::get('broadcasts/web/all', 'BroadcastsController@get_all_broadcast_history');
 
 

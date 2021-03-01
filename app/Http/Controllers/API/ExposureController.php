@@ -337,4 +337,14 @@ class ExposureController extends Controller
         return new GenericCollection(CovidExposure::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(20));
 
     }
+
+    public function partner_covid_exposures($id)
+    {
+        $hcws = PartnerUser::where('partner_id',$id)->pluck('user_id');
+
+        Log::info("HCWs:". $hcws);
+
+        return new GenericCollection(CovidExposure::whereIn('user_id',$hcws)->orderBy('id','desc')->paginate(20));
+
+    }
 }

@@ -6,6 +6,7 @@ use App\Cadre;
 use App\CheckIn;
 use App\Disease;
 use App\HealthCareWorker;
+use App\PartnerUser;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use App\Otp;
@@ -55,6 +56,12 @@ class ProfileController extends Controller
                 $hcw->dob = $request->dob;
                 $hcw->id_no = $request->id_no;
                 $hcw->saveOrFail();
+
+                $hcw_partner = new PartnerUser();
+                $hcw_partner->partner_id = $request->partner_id;
+                $hcw_partner->user_id = $user->id;
+                $hcw_partner->saveOrFail();
+
             }else{
 
                 $hcw->facility_id = $request->facility_id;
@@ -63,6 +70,7 @@ class ProfileController extends Controller
                 $hcw->dob = $request->dob;
                 $hcw->id_no = $request->id_no;
                 $hcw->update();
+
             }
 
 

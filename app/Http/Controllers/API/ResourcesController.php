@@ -73,7 +73,7 @@ class ResourcesController extends Controller
 
         Log::info("HCWs:". $hcws);
 
-        return new GenericCollection(Facility::where('id', $hcws)->orderBy('id','desc')->paginate(100));
+        return new GenericCollection(Facility::where('id', $hcws)->orderBy('id','desc')->paginate(1000));
 
     }
 

@@ -340,7 +340,7 @@ class ExposureController extends Controller
 
     public function partner_covid_exposures($id)
     {
-        $hcws = PartnerUser::where('partner_id',$id)->pluck('user_id')->first();;
+        $hcws = PartnerUser::where('partner_id',$id)->pluck('user_id')->first();
 
         Log::info("HCWs:". $hcws);
 

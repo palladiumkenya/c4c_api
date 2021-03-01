@@ -67,7 +67,7 @@ class ImmunizationController extends Controller
     public function partner_immunizations_by_disease($id, $disease_id)
     {
         $hcws = PartnerUser::where('partner_id',$id)->pluck('user_id');
-        ;
+        
         return new GenericCollection(Immunization::where('disease_id', $disease_id)->orderBy('id','desc')->whereIn('user_id',$hcws)->paginate(100));
     }
 

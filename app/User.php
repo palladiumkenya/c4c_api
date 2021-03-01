@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
 
+    // public function partner()
+    // {
+    //     return $this->hasMany('App\Partner','partner_users');
+    // }
+
     public function hcw()
     {
         return $this->hasOne('App\HealthCareWorker');
@@ -54,6 +59,7 @@ class User extends Authenticatable
         $data = parent::toArray();
         $data['cadre'] = optional(optional($this->hcw)->cadre)->name;
         $data['dob'] = optional($this->hcw)->dob;
+        $data['partner'] = optional($this->partner);
         $data['county'] = optional(optional(optional($this->hcw)->facility)->county)->name;
         $data['sub_county'] = optional(optional(optional($this->hcw)->facility)->sub_county)->name;
         $data['role'] = $this->role;

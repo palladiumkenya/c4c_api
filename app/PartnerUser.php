@@ -19,7 +19,7 @@ class PartnerUser extends Model
     public function toArray() {
         $data = parent::toArray();
         $data['partner_name'] = optional($this->partner)->name;
-        //$data['mfl_code'] = optional($this->facility)->mfl_code;
+        $data['mfl_code'] = optional($this->facility)->mfl_code;
         $data['first_name'] = optional($this->user)->first_name;
         $data['surname'] = optional($this->user)->surname;
         $data['msisdn'] = optional($this->user)->msisdn;

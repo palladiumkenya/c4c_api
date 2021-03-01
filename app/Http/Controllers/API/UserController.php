@@ -9,6 +9,7 @@ use App\Facility;
 use App\FacilityAdmin;
 use App\HealthCareWorker;
 use App\PartnerUser;
+use App\Partner;
 use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use App\Otp;
@@ -84,17 +85,20 @@ class UserController extends Controller
         return new GenericCollection(FacilityAdmin::where('facility_id', $id)->paginate(10));
     }
 
+    public function get_partner_users($id)
+    {
+        $partner = Partner::find($id);
+        if (is_null($partner))
+            abort(404, "Partner does not exist");
+
+        return new GenericCollection(PartnerUser::where('partner_id', $id)->paginate(100));
+    }
+
 
     public function all_facility_admins()
     {
         return new GenericCollection(FacilityAdmin::orderBy('id','desc')->paginate(10));
     }
-
-    public function all_partner_users()
-    {
-        return new GenericCollection(PartnerUser::orderBy('id','desc')->paginate(100));
-    }
-
 
 
 }

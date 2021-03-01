@@ -103,8 +103,8 @@ Route::group([
     Route::get('hcw/facility/{_id}', 'UserController@facility_hcw');
     Route::post('facility_admin/assign', 'UserController@assign_facility_admin');
     Route::get('facility_admin/{id}', 'UserController@get_facility_admin');
-    Route::get('/facility/admins/all', 'UserController@all_facility_admins');
-    Route::get('/partner/users/all', 'UserController@all_partner_users');
+    Route::get('facility/admins/all', 'UserController@all_facility_admins');
+    Route::get('hcw/partner/{_id}', 'UserController@get_partner_users');
 
     //devices
     Route::get('devices/facility/{id}', 'DevicesController@facility_devices');

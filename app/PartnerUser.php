@@ -23,7 +23,8 @@ class PartnerUser extends Model
         $data['first_name'] = optional($this->user)->first_name;
         $data['surname'] = optional($this->user)->surname;
         $data['msisdn'] = optional($this->user)->msisdn;
-        $data['email'] =  optional($this->user)->email;  
+        $data['email'] =  optional($this->user)->email; 
+        $data['gender'] =  optional($this->user)->gender;  
         $data['dob'] =  optional(optional($this->user)->hcw)->dob;     
         $data['sub_county'] = optional(optional(optional(optional($this->user)->hcw)->facility)->sub_county)->name;
         $data['facility_name'] = optional(optional(optional($this->user)->hcw)->facility)->name;

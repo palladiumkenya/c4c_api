@@ -79,7 +79,7 @@ class AuthController extends Controller
             'facility_id' => 'required|numeric|exists:facilities,id',
             'facility_department' => 'required|exists:facility_departments,department_name',
             'cadre' => 'required|exists:cadres,name',
-            'dob' => 'required',
+            //'dob' => 'required',
         ],[
             'email.unique' => 'The email is already registered',
             'msisdn.required' => 'Phone number is required',

@@ -121,7 +121,7 @@ Route::group([
 
     Route::post('resources/protocols/create', 'ResourcesController@create_protocol');
     Route::post('resources/protocols/update', 'ResourcesController@update_protocol');
-    Route::get('resources/protocols/{id}', 'ResourcesController@get_facility_protocols');
+    Route::get('resources/protocols/{id}', 'ResourcesController@get_facility_protocols_dashboard');
     Route::get('resources/protocols/details/{id}', 'ResourcesController@get_protocols_details');
     Route::delete('resources/protocols/delete/{id}', 'ResourcesController@delete_facility_protocol');
 

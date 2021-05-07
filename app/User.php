@@ -59,7 +59,7 @@ class User extends Authenticatable
         $data = parent::toArray();
         $data['cadre'] = optional(optional($this->hcw)->cadre)->name;
         $data['dob'] = optional($this->hcw)->dob;
-        $data['partner'] = optional($this->partner)->name;
+       // $data['partner'] = optional($this->partner)->name;
         $data['county'] = optional(optional(optional($this->hcw)->facility)->county)->name;
         $data['sub_county'] = optional(optional(optional($this->hcw)->facility)->sub_county)->name;
         $data['role'] = $this->role;

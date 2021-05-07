@@ -476,7 +476,7 @@ class ResourcesController extends Controller
         ], 201);
     }
 
-    public function get_facility_protocols($id)
+    public function get_facility_protocols_dashboard($id)
     {
         return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$id)->paginate(20));
     }

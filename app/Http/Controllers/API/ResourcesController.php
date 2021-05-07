@@ -532,7 +532,7 @@ class ResourcesController extends Controller
         return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$hcw->facility_id)->paginate(20));
     }
 
-    public function get_hcw_facility_protocols()
+    public function get_facility_protocols()
     {
         $user = auth()->user();
 

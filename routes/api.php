@@ -125,7 +125,7 @@ Route::group([
     Route::get('resources/protocols/details/{id}', 'ResourcesController@get_protocols_details');
     Route::delete('resources/protocols/delete/{id}', 'ResourcesController@delete_facility_protocol');
 
-    Route::get('resources/hcw/protocols', 'ResourcesController@get_hcw_facility_protocols');
+    Route::get('resources/hcw/protocols', 'ResourcesController@get_facility_protocols');
     Route::get('resources/protocols/partner/{id}', 'ResourcesController@get_partner_protocols');
 
 

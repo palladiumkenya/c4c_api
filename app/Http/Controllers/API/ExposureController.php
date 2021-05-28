@@ -193,7 +193,7 @@ class ExposureController extends Controller
             Log::info(json_decode($result, true));
 
 
-            send_sms(auth()->user()->msisdn,  "Dear ".auth()->user()->first_name.", Welcome to COVID-19 Exposure follow-up, it’s regrettable, Please note that you will be required to report on your symptoms daily for the next 14 days. MOH");
+            send_sms(auth()->user()->msisdn,  "Dear ".auth()->user()->first_name.", Welcome to COVID-19 Exposure follow-up, it is regrettable, Please note that you will be required to report on your symptoms daily for the next 14 days. MOH");
             SendSMS::dispatch(auth()->user(),"Dear ".auth()->user()->first_name.", thank you for observing your IPC guidelines. Have you had a COVID-19 PCR test? YES or NO. MOH")->delay(now()->addDays(8));
             SendSMS::dispatch(auth()->user(),"Dear ".auth()->user()->first_name.", thank you for observing the IPC guidelines, you have now completed the 14 days quarantine period. Have you resumed work? MOH")->delay(now()->addDays(15));
 

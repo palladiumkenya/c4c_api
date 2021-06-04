@@ -43,8 +43,8 @@ class UserController extends Controller
 
     public function facility_hcw($id)
     {
-        //return new GenericCollection(HealthCareWorker::where('facility_id',$id)->paginate(100));
-        return new GenericCollection(HealthCareWorker::where('facility_id',$id));
+        return new GenericCollection(HealthCareWorker::where('facility_id',$id)->paginate(250));
+        //return new GenericCollection(HealthCareWorker::where('facility_id',$id));
     }
 
     public function assign_facility_admin(Request $request)

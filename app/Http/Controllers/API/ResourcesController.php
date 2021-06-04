@@ -46,7 +46,7 @@ class ResourcesController extends Controller
 //            return DB::table('facilities')->get();
 //        });
 
-        $facilities = Facility::paginate(250);
+        $facilities = Facility::all();
 
         return response()->json([
             'success' => true,

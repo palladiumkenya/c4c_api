@@ -31,7 +31,7 @@ class ResourcesController extends Controller
 {
     public function __construct()
     {
-//        $this->middleware('auth:api');
+        //        $this->middleware('auth:api');
     }
 
     public function diseases()
@@ -42,9 +42,9 @@ class ResourcesController extends Controller
     public function facilities()
     {
 
-//        $facilities = Cache::get('facilities', function () {
-//            return DB::table('facilities')->get();
-//        });
+        //        $facilities = Cache::get('facilities', function () {
+        //            return DB::table('facilities')->get();
+        //        });
 
         $facilities = Facility::all();
 
@@ -85,9 +85,9 @@ class ResourcesController extends Controller
             'facility_id' => 'required|numeric|exists:facilities,id',
             'department_name' => 'required',
         ],[
-//            'facility_id.required' => 'Please select your facility',
-//            'facility_department_id.required' => 'Please select your department',
-//            'cadre_id.required' => 'Please select your cadre'
+            //            'facility_id.required' => 'Please select your facility',
+            //            'facility_department_id.required' => 'Please select your department',
+            //            'cadre_id.required' => 'Please select your cadre'
         ]);
 
         $fDepartment = new FacilityDepartment();
@@ -109,10 +109,10 @@ class ResourcesController extends Controller
 
     public function facility_departments($_id)
     {
-//        $facility = Facility::find($_id);
-//
-//        if (is_null($facility))
-//            abort(404, "Facility does not exist");
+        //        $facility = Facility::find($_id);
+        //
+        //        if (is_null($facility))
+        //            abort(404, "Facility does not exist");
 
         return new GenericCollection(FacilityDepartment::all());
     }
@@ -124,9 +124,9 @@ class ResourcesController extends Controller
             'type' => 'required|in:COMPLIMENT,COMPLAINT,SUGGESTION',
             'feedback' => 'required',
         ],[
-//            'facility_id.required' => 'Please select your facility',
-//            'facility_department_id.required' => 'Please select your department',
-//            'cadre_id.required' => 'Please select your cadre'
+        //            'facility_id.required' => 'Please select your facility',
+        //            'facility_department_id.required' => 'Please select your department',
+        //            'cadre_id.required' => 'Please select your cadre'
         ]);
 
 
@@ -144,7 +144,7 @@ class ResourcesController extends Controller
         $feedback->type = $request->type;
         $feedback->feedback = $request->feedback;
         $feedback->anonymous = $request->anonymous;
-//        $masterfile->dob = Carbon::createFromFormat('Y-m-d', $request->dob);  ;
+        //        $masterfile->dob = Carbon::createFromFormat('Y-m-d', $request->dob);  ;
 
         if ($request->hasFile('file')){
 
@@ -194,9 +194,9 @@ class ResourcesController extends Controller
             'body' => 'required',
             'image_file' => 'nullable|mimes:jpeg,jpg,png',
         ],[
-//            'facility_id.required' => 'Please select your facility',
-//            'facility_department_id.required' => 'Please select your department',
-//            'cadre_id.required' => 'Please select your cadre'
+        //            'facility_id.required' => 'Please select your facility',
+        //            'facility_department_id.required' => 'Please select your department',
+        //            'cadre_id.required' => 'Please select your cadre'
         ]);
 
 
@@ -255,9 +255,9 @@ class ResourcesController extends Controller
             'body' => 'required',
             'image_file' => 'nullable|mimes:jpeg,jpg,png',
         ],[
-//            'facility_id.required' => 'Please select your facility',
-//            'facility_department_id.required' => 'Please select your department',
-//            'cadre_id.required' => 'Please select your cadre'
+        //            'facility_id.required' => 'Please select your facility',
+        //            'facility_department_id.required' => 'Please select your department',
+        //            'cadre_id.required' => 'Please select your cadre'
         ]);
 
 
@@ -349,9 +349,9 @@ class ResourcesController extends Controller
             'body' => 'required',
             'image_file' => 'nullable|mimes:jpeg,jpg,png',
         ],[
-//            'facility_id.required' => 'Please select your facility',
-//            'facility_department_id.required' => 'Please select your department',
-//            'cadre_id.required' => 'Please select your cadre'
+        //            'facility_id.required' => 'Please select your facility',
+        //            'facility_department_id.required' => 'Please select your department',
+        //            'cadre_id.required' => 'Please select your cadre'
         ]);
 
 
@@ -416,9 +416,9 @@ class ResourcesController extends Controller
             'body' => 'required',
             'image_file' => 'nullable|mimes:jpeg,jpg,png',
         ],[
-//            'facility_id.required' => 'Please select your facility',
-//            'facility_department_id.required' => 'Please select your department',
-//            'cadre_id.required' => 'Please select your cadre'
+        //            'facility_id.required' => 'Please select your facility',
+        //            'facility_department_id.required' => 'Please select your department',
+        //            'cadre_id.required' => 'Please select your cadre'
         ]);
 
         $protocol = FacilityProtocol::find($request->protocol_id);
@@ -474,6 +474,11 @@ class ResourcesController extends Controller
             'success' => true,
             'message' => 'Protocol updated successfully'
         ], 201);
+    }
+
+    public function get_all_protocols()
+    {
+        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->paginate(20));
     }
 
     public function get_facility_protocols_dashboard($id)

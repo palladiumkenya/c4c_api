@@ -129,7 +129,7 @@ Route::group([
 
     Route::get('resources/hcw/protocols', 'ResourcesController@get_facility_protocols');
     Route::get('resources/protocols/partner/{id}', 'ResourcesController@get_partner_protocols');
-
+    Route::get('resources/protocols', 'ResourcesController@get_all_protocols');
 
     Route::post('resources/special/create', 'ResourcesController@create_special_resource');
     Route::post('resources/special/update', 'ResourcesController@update_special_resource');

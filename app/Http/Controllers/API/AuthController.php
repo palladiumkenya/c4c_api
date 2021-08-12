@@ -119,6 +119,7 @@ class AuthController extends Controller
             $hcw->cadre_id = is_null($fCadre) ? 1 : $fCadre->id;
             $hcw->dob = $request->dob;
             $hcw->id_no = $request->id_no;
+            $hcw->other_specify = $request->other_specify;
             $hcw->saveOrFail();
 
             $user->profile_complete = 1;

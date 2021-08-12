@@ -21,6 +21,11 @@ class FacilityProtocol extends Model
         return $this->hasMany('App\FacilityProtocolFile');
     }
 
+    public function facility()
+    {
+        return $this->belongsTo('App\Facility', 'facility_id');
+    }
+
     public function getCreatedAtAttribute($value)
     {
         $date = Carbon::parse($value);

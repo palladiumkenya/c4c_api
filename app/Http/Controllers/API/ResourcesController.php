@@ -478,12 +478,12 @@ class ResourcesController extends Controller
 
     public function get_all_protocols()
     {
-        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->paginate(20));
+        return new GenericCollection(FacilityProtocol::with('facility')->orderBy('id','desc')->paginate(20));
     }
 
     public function get_facility_protocols_dashboard($id)
     {
-        return new GenericCollection(FacilityProtocol::orderBy('id','desc')->where('facility_id',$id)->paginate(20));
+        return new GenericCollection(FacilityProtocol::with('facility')->orderBy('id','desc')->where('facility_id',$id)->paginate(20));
     }
 
     public function get_protocols_details($id)

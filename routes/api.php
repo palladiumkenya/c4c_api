@@ -67,6 +67,8 @@ Route::group([
     Route::get('immunizations/all', 'ImmunizationController@all_immunizations');
     Route::get('immunizations/all/disease/{id}', 'ImmunizationController@all_immunizations_by_disease');
     Route::post('immunizations/new', 'ImmunizationController@new_immunization');
+    Route::post('immunizations/update', 'ImmunizationController@update_immunization');
+
 
     //exposures
     Route::get('exposures', 'ExposureController@exposures');

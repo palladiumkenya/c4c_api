@@ -9,6 +9,7 @@ use App\Http\Resources\GenericCollection;
 use App\Immunization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ImmunizationController extends Controller
@@ -120,4 +121,37 @@ class ImmunizationController extends Controller
 
 
     }
+
+    public function update_immunization(Request $request)
+    {
+        $request->validate([
+            'disease_id' => 'required|numeric|exists:diseases,id',
+            'date' => 'required',
+        ],[
+            'disease_id.required' => 'Please select a disease'
+        ]);
+
+        $disease = Immunization::where('user_id', $request->user_id)->where('disease_id', $request->disease_id )->first();
+
+        if(is_null($disease))
+            abort(404, "Immunization disease not found");
+
+        DB::transaction(function () use ($request, $disease) {
+            $disease->user_id = \auth()->user()->id;
+            $disease->disease_id = $request->disease_id;
+            $disease->date = $request->date;
+            $disease->next_immunization_date = $request->next_immunization_date;
+            $disease->update();
+
+            Log::info("Immunization updated succesfully");
+
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Immunization updated succesfully'
+        ], 201);
+
+    }
+
 }

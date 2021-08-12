@@ -133,15 +133,48 @@ class ImmunizationController extends Controller
 
         $disease = Immunization::where('user_id', $request->user_id)->where('disease_id', $request->disease_id )->first();
 
+        $disease1 = Immunization::where('user_id', $request->user_id)->where('disease_id', $request->disease_id )->skip(1)->first();
+
+        $disease2 = Immunization::where('user_id', $request->user_id)->where('disease_id', $request->disease_id )->skip(2)->first();
+
         if(is_null($disease))
             abort(404, "Immunization disease not found");
 
-        DB::transaction(function () use ($request, $disease) {
+        DB::transaction(function () use ($request, $disease, $disease1, $disease2) {
             $disease->user_id = \auth()->user()->id;
             $disease->disease_id = $request->disease_id;
             $disease->date = $request->date;
-            $disease->next_immunization_date = $request->next_immunization_date;
             $disease->update();
+
+            if (!is_null($request->second_dose)){
+                if(is_null($disease1)) {
+                    $immunization = new Immunization();
+                    $immunization->user_id = \auth()->user()->id;
+                    $immunization->disease_id = $request->disease_id;
+                    $immunization->date = $request->second_dose;
+                    $immunization->saveOrFail();
+                } else {
+                    $disease1->user_id = \auth()->user()->id;
+                    $disease1->disease_id = $request->disease_id;
+                    $disease1->date = $request->second_dose;
+                    $disease1->update();
+                }
+            }
+    
+            if (!is_null($request->third_dose)){
+                if(is_null($disease2)) {
+                    $immunization = new Immunization();
+                    $immunization->user_id = \auth()->user()->id;
+                    $immunization->disease_id = $request->disease_id;
+                    $immunization->date = $request->third_dose;
+                    $immunization->saveOrFail();
+                } else {
+                    $disease2->user_id = \auth()->user()->id;
+                    $disease2->disease_id = $request->disease_id;
+                    $disease2->date = $request->third_dose;
+                    $disease2->update();
+                }
+            }
 
             Log::info("Immunization updated succesfully");
 

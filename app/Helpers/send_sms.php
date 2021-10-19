@@ -24,7 +24,7 @@ function send_sms($recipientNumber, $message){
     Log::info("sending message...");
 
     $username = "mhealthuser";
-    $apiKey   = "a134a43032612487eb3f4d5fcc4c6c7538d56afdd871dcd284ab171d778c4e51";
+    $apiKey   = "972bdb6f53893725b09eaa3581a264ebf77b0e816ef5e9cb9f29e0c7738e41c1";
     $AT       = new AfricasTalking($username, $apiKey);
 
     $sms      = $AT->sms();

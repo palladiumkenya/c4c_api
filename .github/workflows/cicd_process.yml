@@ -25,7 +25,12 @@ jobs:
           cp /apps/configs/c4c_api/nginx.dockerfile /apps/github-workflows/mhealth-apps/c4c_api/
           cp /apps/configs/c4c_api/php.dockerfile /apps/github-workflows/mhealth-apps/c4c_api/
           cp -r /apps/configs/c4c_api/nginx /apps/github-workflows/mhealth-apps/c4c_api/
-          docker-compose stop c4c-php
-          docker-compose rm -f c4c-php
-          sudo docker-compose --env-file .env up -d --build c4c-php  
+          docker-compose stop php
+          docker-compose rm -f php
+          docker-compose up -d php
+           # execute normal laravel commands
+          docker-compose exec -T php composer install --ignore-platform-reqs --no-dev
+          docker-compose exec -T php php artisan config:cache
+          docker-compose exec -T php php artisan view:cache
+          docker-compose exec -T php chmod -R 777 storage/
           

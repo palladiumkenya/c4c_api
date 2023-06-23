@@ -11,9 +11,9 @@ jobs:
     - name: executing remote connection
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.CICD_SECRET }}
+        host: ${{ secrets.CICD2 }}
+        username: ${{ secrets.CICD2_USERNAME }}
+        key: ${{ secrets.CICD2_SECRET }}
         port: ${{ secrets.PORT }}
         script: |
           git config --global --add safe.directory /apps/github-workflows/mhealth-apps/c4c_api/      
@@ -25,7 +25,7 @@ jobs:
           cp /apps/configs/c4c_api/nginx.dockerfile /apps/github-workflows/mhealth-apps/c4c_api/
           cp /apps/configs/c4c_api/php.dockerfile /apps/github-workflows/mhealth-apps/c4c_api/
           cp -r /apps/configs/c4c_api/nginx /apps/github-workflows/mhealth-apps/c4c_api/
-          docker-compose down
-          docker-compose rm -f
-          sudo docker-compose --env-file .env up -d --build site  
+          docker-compose stop c4c-php
+          docker-compose rm -f c4c-php
+          sudo docker-compose --env-file .env up -d --build c4c-php  
           
